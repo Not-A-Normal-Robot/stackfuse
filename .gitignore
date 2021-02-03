@@ -4,3 +4,4 @@ dist/*.zip
 dist/**/cambridge.exe
 dist/**/libs
 dist/**/*.md
+*.psd

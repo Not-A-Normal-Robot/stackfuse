@@ -566,7 +566,7 @@ function GameMode:setHoldOpacity()
 end
 
 function GameMode:drawScoringInfo()
-	love.graphics.setColor(1, 1, 1, 1)
+	--[[love.graphics.setColor(1, 1, 1, 1)
 	love.graphics.setFont(font_3x5_2)
 
 	if config["side_next"] then
@@ -582,9 +582,11 @@ function GameMode:drawScoringInfo()
 		self.drop_bonus
 	)
 
-	love.graphics.setFont(font_8x11)
-	love.graphics.printf(formatTime(self.frames), 64, 420, 160, "center")
+	love.graphics.setFont(font_newBiggerFont)
+	love.graphics.printf(formatTime(self.frames), 65, 420, 160, "center")
+	]]
 end
+
 
 function GameMode:drawSectionTimes(current_section)
 	local section_x = 530

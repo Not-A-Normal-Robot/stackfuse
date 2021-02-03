@@ -390,7 +390,7 @@ function Grid:draw()
 		for x = 1, self.width do
 			if self.grid[y][x] ~= empty then
 				if self.grid_age[y][x] < 2 then
-					love.graphics.setColor(1, 1, 1, 1)
+					love.graphics.setColor(0, 0, 0, 1)
 					love.graphics.draw(blocks[self.grid[y][x].skin]["F"], 48+x*16, y*16)
 				else
 					if self.grid[y][x].skin == "bone" then
@@ -398,12 +398,12 @@ function Grid:draw()
 					elseif self.grid[y][x].colour == "X" then
 						love.graphics.setColor(0.5, 0.5, 0.5, 1 - self.grid_age[y][x] / 15)
 					else
-						love.graphics.setColor(0.5, 0.5, 0.5, 1)
+						love.graphics.setColor(1, 1, 1, 1)
 					end
 					love.graphics.draw(blocks[self.grid[y][x].skin][self.grid[y][x].colour], 48+x*16, y*16)
 				end
 				if self.grid[y][x].skin ~= "bone" and self.grid[y][x].colour ~= "X" then
-					love.graphics.setColor(0.8, 0.8, 0.8, 1)
+					love.graphics.setColor(1, 1, 1, 0)
 					love.graphics.setLineWidth(1)
 					if y > 1 and self.grid[y-1][x] == empty or self.grid[y-1][x].colour == "X" then
 						love.graphics.line(48.0+x*16, -0.5+y*16, 64.0+x*16, -0.5+y*16)
@@ -428,11 +428,11 @@ function Grid:drawOutline()
 	for y = 5, self.height do
 		for x = 1, self.width do
 			if self.grid[y][x].colour == "X" then
-				love.graphics.setColor(0.5, 0.5, 0.5, 1 - self.grid_age[y][x] / 15)
+				love.graphics.setColor(1, 1, 1, 1 --[[- self.grid_age[y][x] / 15]])
 				love.graphics.draw(blocks[self.grid[y][x].skin][self.grid[y][x].colour], 48+x*16, y*16)
 			end
 			if self.grid[y][x] ~= empty and self.grid[y][x].colour ~= "X" then
-				love.graphics.setColor(0.8, 0.8, 0.8, 1)
+				love.graphics.setColor(1, 1, 1, 1)
 				love.graphics.setLineWidth(1)
 				if y > 1 and self.grid[y-1][x] == empty or self.grid[y-1][x].colour == "X" then
 					love.graphics.line(48.0+x*16, -0.5+y*16, 64.0+x*16, -0.5+y*16)
@@ -454,7 +454,7 @@ end
 
 function Grid:drawInvisible(opacity_function, garbage_opacity_function, lock_flash, brightness)
 	lock_flash = lock_flash == nil and true or lock_flash
-	brightness = brightness == nil and 0.5 or brightness
+	brightness = brightness == nil and 1 or brightness
 	for y = 5, self.height do
 		for x = 1, self.width do
 			if self.grid[y][x] ~= empty then
@@ -511,7 +511,7 @@ function Grid:drawCustom(colour_function, gamestate)
 				love.graphics.setColor(R, G, B, A)
 				love.graphics.draw(blocks[self.grid[y][x].skin][self.grid[y][x].colour], 48+x*16, y*16)
                 if outline > 0 and self.grid[y][x].colour ~= "X" then
-                    love.graphics.setColor(0.64, 0.64, 0.64, outline)
+                    love.graphics.setColor(1, 1, 1, outline)
                     love.graphics.setLineWidth(1)
                     if y > 1 and self.grid[y-1][x] == empty or self.grid[y-1][x].colour == "X" then
 						love.graphics.line(48.0+x*16, -0.5+y*16, 64.0+x*16, -0.5+y*16)

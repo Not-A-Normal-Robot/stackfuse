@@ -7,12 +7,13 @@ local Grid = require 'tetris.components.grid'
 local History4RollsRandomizer = require 'tetris.randomizers.history_4rolls'
 
 local MarathonA1Game = GameMode:extend()
+--local modesounds = sounds:extend()
 
-MarathonA1Game.name = "Marathon A1"
+MarathonA1Game.name = "Hypertap Master"
 MarathonA1Game.hash = "MarathonA1"
-MarathonA1Game.tagline = "Can you score enough points to reach the title of Grand Master?"
+MarathonA1Game.tagline = "Can you score enough points to reach the title of Grand Master, all while risking getting RSI?"
 
-
+--local sounds.lock = love.audio.newSource("res/se/cursor.wav", "static")
 
 function MarathonA1Game:new()
 	MarathonA1Game.super:new()
@@ -48,7 +49,7 @@ function MarathonA1Game:getLineARE()
 end
 
 function MarathonA1Game:getDasLimit()
-	return 15
+	return 15000
 end
 
 function MarathonA1Game:getLineClearDelay()
@@ -191,41 +192,48 @@ function MarathonA1Game:drawScoringInfo()
 	MarathonA1Game.super.drawScoringInfo(self)
 	love.graphics.setColor(1, 1, 1, 1)
 
-	love.graphics.setFont(font_3x5_2)
-	love.graphics.print(
-		self.das.direction .. " " ..
-		self.das.frames .. " " ..
-		strTrueValues(self.prev_inputs)
-	)
-	love.graphics.printf("NEXT", 64, 40, 40, "left")
-	love.graphics.printf("GRADE", 240, 120, 40, "left")
-	love.graphics.printf("SCORE", 240, 200, 40, "left")
-	love.graphics.printf("NEXT RANK", 240, 260, 90, "left")
-	love.graphics.printf("LEVEL", 240, 320, 40, "left")
+	love.graphics.setFont(font_NEC)
+	love.graphics.printf("NEXT", 64, 32, 40, "left")
+	love.graphics.printf("GRADE", 256, 112, 40, "left")
+	love.graphics.printf("SCORE", 256, 192, 40, "left")
+	love.graphics.printf("NEXT RANK", 256, 256, 90, "left")
+	love.graphics.printf("LEVEL", 256, 320, 40, "left")
 	local sg = self.grid:checkSecretGrade()
 	if sg >= 5 then 
-		love.graphics.printf("SECRET GRADE", 240, 430, 180, "left")
+		love.graphics.printf("SECRET GRADE", 256, 432, 180, "left")
 	end
 
-	if self.bravos > 0 then love.graphics.printf("BRAVO", 300, 120, 40, "left") end
+	if self.bravos > 0 then love.graphics.printf("BRAVO", 304, 128, 40, "left") end
 
-	love.graphics.setFont(font_3x5_3)
-	love.graphics.printf(self.score, 240, 220, 90, "left")
+	love.graphics.setFont(font_NEC_Big)
+	love.graphics.printf(self.score, 256, 208, 90, "left")
 	if self.gm_conditions["level300"] and self.gm_conditions["level500"] and self.gm_conditions["level999"] then
-		love.graphics.printf("GM", 240, 140, 90, "left")
+		love.graphics.printf("GM", 256, 128, 90, "left")
 	else
-		love.graphics.printf(getRankForScore(self.score).rank, 240, 140, 90, "left")
+		love.graphics.printf(getRankForScore(self.score).rank, 256, 128, 90, "left")
 	end
-	love.graphics.printf(getRankForScore(self.score).next, 240, 280, 90, "left")
-	love.graphics.printf(self.level, 240, 340, 40, "right")
-	love.graphics.printf(self:getSectionEndLevel(), 240, 370, 40, "right")
+	love.graphics.printf(getRankForScore(self.score).next, 256, 272, 90, "left")
+	love.graphics.printf(self.level, 256, 336, 80, "right")
+	love.graphics.printf(self:getSectionEndLevel(), 256, 370, 80, "right")
 	if sg >= 5 then
-		love.graphics.printf(self.SGnames[sg], 240, 450, 180, "left")
+		love.graphics.printf(self.SGnames[sg], 256, 448, 180, "left")
 	end
-	if self.bravos > 0 then love.graphics.printf(self.bravos, 300, 140, 40, "left") end
+	if self.bravos > 0 then love.graphics.printf(self.bravos, 304, 144, 40, "left") end
 	
-	love.graphics.setFont(font_8x11)
-	love.graphics.printf(formatTime(self.frames), 64, 420, 160, "center")
+	leftsidebarUnderlay = love.graphics.newImage("res/img/leftsidebarUnderlay.png")
+	love.graphics.draw(leftsidebarUnderlay, 42, 80)
+	
+	love.graphics.setColor(1, 0, 0, 1)
+	love.graphics.rectangle("fill", 42, 400, 8, -math.floor((self.level % 100)*3.23) )
+	love.graphics.setColor(1, 1, 1, 1)
+	
+	leftsidebar = love.graphics.newImage("res/img/leftsidebar.png")
+	love.graphics.draw(leftsidebar, 42, 80)
+
+	
+	love.graphics.setFont(font_newBiggerFont)
+	love.graphics.printf(formatTime(self.frames), 65, 416, 160, "center")
+
 end
 
 function MarathonA1Game:getSectionEndLevel()

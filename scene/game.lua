@@ -51,7 +51,7 @@ function GameScene:render()
 
 	-- game frame
 	if self.game.grid.width == 10 and self.game.grid.height == 24 then
-		love.graphics.draw(misc_graphics["frame"], 48, 64)
+		love.graphics.draw(misc_graphics["frame"], 0, 0)
 	end
 	
 	love.graphics.setColor(0, 0, 0, 200)

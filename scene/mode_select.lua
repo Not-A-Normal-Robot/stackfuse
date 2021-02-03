@@ -31,7 +31,7 @@ end
 
 function ModeSelectScene:render()
 	love.graphics.draw(
-		backgrounds[0],
+		backgrounds["game_config"],
 		0, 0, 0,
 		0.5, 0.5
 	)
@@ -123,5 +123,6 @@ function ModeSelectScene:changeRuleset(rel)
 	local len = table.getn(rulesets)
 	self.menu_state.ruleset = (self.menu_state.ruleset + len + rel - 1) % len + 1
 end
+
 
 return ModeSelectScene

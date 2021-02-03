@@ -1,15 +1,25 @@
-![Cambridge Banner](https://cdn.discordapp.com/attachments/764432435802013709/767724895076614154/cambridge_logo_lt.png)
+![stackfuse banner](https://cdn.discordapp.com/attachments/806285072046751780/806542365426581534/stackfuse_logo.png)
 
-Cambridge
+stackfuse
 =========
 
-Welcome to Cambridge, the next open-source falling-block game engine!
+stackfuse is a work-in-progress fork of Cambridge, an open-source arcade stacking game. It is not intended to be clean, it is not intended to be built upon, it is not intended to be better than Cambridge. It's intended to be its own thing, with its own game modes and own assets and everything that goes along with that. If you want to actually improve the engine and contribute, please go help out the actual Cambridge project and not this. This fork is mainly a way to strive for creativity, not for improvement.
 
-This fork is written and maintained exclusively by [SashLilac](https://github.com/SashLilac), [joezeng](https://github.com/joezeng) and [Oshisaure](https://github.com/oshisaure)!
+If you look at the source code, you will want to scream. You will hate it. And you know what? I don't give a damn. The sole reason this exists is to bring my mode concepts to life. There is a chance that if I ever get better at programming, I will revisit these concepts in the future.
 
-Join our Discord server for help and a welcoming community! https://discord.gg/mteMJw4
+This fork likely wouldn't be a reality without the help of the Cambridge discord. Please go check them out.
 
-Credits
+Gamemodes
+----------------
+* Hypertap master: Literally the very first master mode of a certain arcade series... except there is no DAS. At all. You're forced to hypertap. Enjoy the RSI.
+* Powerstack: A survival-oriented gamemode where your goal is to keep your multiplier up high and extend your time limit. High score is defined by amount of levels you got.
+
+Playing the game
+----------------
+
+Clone the repo if you really want to try this out. Windows people can just run launch.bat and other OS users can use the terminal to launch it - just point love2d to the root of the downloaded repo.
+
+Original Cambridge Credits
 -------
 
 - [Lilla Oshisaure](https://www.youtube.com/user/LeSpyroshisaure) for being my co-dev!
@@ -25,78 +35,18 @@ The following people in no particular order also helped with the project:
 - MattMayuga
 - Kitaru
 - switchpalacecorner
-- [sinefuse](https://github.com/sinefuse)
+- [sinefuse](https://github.com/sinefuse) (hey who is this smug bastard)
 - [2Tie](https://github.com/2Tie)
 - [nightmareci](https://github.com/nightmareci)
 - [MyPasswordIsWeak](https://github.com/MyPasswordIsWeak)
 - [Dr Ocelot](https://github.com/Dr-Ocelot)
 
-![Cambridge Logo](https://cdn.discordapp.com/attachments/625496179433668635/763363717730664458/Icon_2.png)
-
-Playing the game
-----------------
-
-### Windows
-
-You do not need LÖVE on Windows, as it comes bundled with the program.  
-
-To get the stable release, simply download the ZIP in the latest release. All assets needed are bundled with the executable.
-
-If you want the bleeding edge version, download [this](https://github.com/SashLilac/cambridge/archive/master.zip).
-
-Extract the ZIP, open a Command Prompt at the folder you extracted Cambridge to, then run this command:
-
-	dist\windows\love.exe .
-
-Alternatively, if you're on a 32-bit system, run this instead:
-
-	dist\win32\love.exe .
-
-32-bit systems do not support rich presence integration.
-
-Then, check the mod pack section at the bottom of this page.
-
-### macOS, Linux
-
-If you haven't already, install `love` with your favourite package manager (Homebrew on macOS, your system's default on Linux). **Make sure you're using LÖVE 11, because it won't work with earlier versions!**
-
-#### Downloading a release
-
-You can download the .love file in the latest release, and run it with:
-
-    love cambridge.love
-
-#### Installing from source
-
-Clone the repository in git:
-
-	git clone https://github.com/SashLilac/cambridge
-
-Alternatively, download the source code ZIP in the latest release.
-
-Then, navigate to the root directory that you just cloned, and type:
-
-	love .
-
-It should run automatically!
-
-## Installing modpacks
-
-Simply drag your mode, ruleset, and randomizer Lua files into their respective [directory](https://love2d.org/wiki/love.filesystem), and they should appear automatically.  
-
-You can also load custom assets through this way, assuming you preserve the directory structure.  
-
-**WARNING:** The .exe / .love files and the bleeding edge releases have different save directories. Read the above link carefully!
-
-For more detailed instructions, install [this](https://github.com/SashLilac/cambridge-modpack) mod pack to get a taste of the mod potential.
-
 License
 -------
-
-The Cambridge project is licensed under the MIT license (included in LICENSE.md).
+As this fork is based on Cambridge, which is licensed under a MIT license, stackfuse is too - however I would appreciate if you wouldn't implement my own gamemodes in your own engines, unless you ask me first. I'll likely allow it if you do so. However, nothing is stopping you either.
 
 Some code and assets in this repository are contributed by members of the
 community, as well as borrowed from other places, either with licensing
 or as placeholders until suitable material can be found that is properly
 licensed. Their original sources, and copyright notices if applicable, are
-listed in the file SOURCES.
+listed in the file SOURCES. However, I will try and replace most of that stuff with my own things.
