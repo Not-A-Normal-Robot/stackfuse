@@ -12,12 +12,10 @@ Powerstack.name = "Powerstack"
 Powerstack.hash = "Powerstack"
 Powerstack.tagline = "Stack fast and efficiently to increase the power multiplier!"
 
---local sounds.lock = love.audio.newSource("res/se/cursor.wav", "static")
-
 function Powerstack:new()
 	Powerstack.super:new()
 	
-	self.level = 1
+	self.level = 0
 	self.roll_frames = 0
 	self.combo = 1
 	self.bravos = 0
@@ -145,8 +143,6 @@ local cleared_row_levels_power = {2, 4, 8, 12}
 local multiplieradder = {0, 2, 6, 16}
 local timeadder = {0.1, 0.5, 1, 2}
 
---multiplier is a value that goes from 2 to 50
-
 function Powerstack:onLineClear(cleared_row_count)
 	if self.powermode then
 		local new_level = self.level + cleared_row_levels_power[cleared_row_count]
@@ -173,14 +169,11 @@ function Powerstack:drawScoringInfo()
 	love.graphics.setFont(font_NEC)
 	love.graphics.printf("NEXT", 129, 8, 40, "left")
 	love.graphics.printf("MULTIPLIER", 256, 128, 120, "left")
-	--love.graphics.printf("DRAIN", 256, 256, 90, "left")
 	love.graphics.printf("LEVEL", 256, 312, 40, "left")	
 
 	love.graphics.setFont(font_NEC_Big)
 	love.graphics.printf("x"..string.format("%.3f",(self.multiplier/10)), 256, 160, 120, "left")
-	--love.graphics.printf(self.drain, 256, 272, 90, "left")
 	love.graphics.printf(self.level, 256, 336, 80, "left")
-	--love.graphics.printf(self:getSectionEndLevel(), 256, 370, 80, "right")
 	
 	leftsidebarUnderlay = love.graphics.newImage("res/img/leftsidebarUnderlay.png")
 	love.graphics.draw(leftsidebarUnderlay, 42, 80)
