@@ -1,4 +1,4 @@
-![stackfuse banner](https://cdn.discordapp.com/attachments/806285072046751780/806542365426581534/stackfuse_logo.png)
+![stackfuse banner](https://media.discordapp.net/attachments/806285072046751780/806547308376227840/stackfuse_logo.png)
 
 stackfuse
 =========
