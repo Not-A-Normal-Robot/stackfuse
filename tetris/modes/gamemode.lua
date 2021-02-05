@@ -496,7 +496,7 @@ function GameMode:initializeNextPiece(inputs, ruleset, piece_data, generate_next
 end
 
 function GameMode:playNextSound(ruleset)
-	playSE("blocks", ruleset.next_sounds[self.next_queue[1].shape])
+	--playSE("blocks", ruleset.next_sounds[self.next_queue[1].shape])
 end
 
 function GameMode:getHighScoreData()
