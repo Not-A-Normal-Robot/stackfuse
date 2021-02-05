@@ -73,7 +73,6 @@ function ModeSelectScene:onInputPress(e)
 		current_ruleset = self.menu_state.ruleset
 		config.current_mode = current_mode
 		config.current_ruleset = current_ruleset
-		playSE("mode_decide")
 		saveConfig()
 		scene = GameScene(game_modes[self.menu_state.mode], rulesets[self.menu_state.ruleset], self.secret_inputs)
 	elseif e.input == "up" or e.scancode == "up" then

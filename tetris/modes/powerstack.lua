@@ -29,6 +29,7 @@ function Powerstack:new()
 	self.enable_hard_drop = true
 	self.enable_hold = true
 	self.next_queue_length = 3
+	self.sectioncheck = 0
 end
 
 function Powerstack:getARE()
@@ -134,6 +135,27 @@ end
 
 function Powerstack:onPieceEnter()
 	self.level = self.level + 1
+	if self.level >= 50 and self.sectioncheck == 0 or
+	self.level >= 100 and self.sectioncheck == 1 or
+	self.level >= 150 and self.sectioncheck == 2 or
+	self.level >= 200 and self.sectioncheck == 3 or
+	self.level >= 250 and self.sectioncheck == 4 or
+	self.level >= 300 and self.sectioncheck == 5 or
+	self.level >= 400 and self.sectioncheck == 6 or
+	self.level >= 500 and self.sectioncheck == 7 or
+	self.level >= 600 and self.sectioncheck == 8 or
+	self.level >= 700 and self.sectioncheck == 9 or
+	self.level >= 800 and self.sectioncheck == 10 or
+	self.level >= 900 and self.sectioncheck == 11 or
+	self.level >= 1000 and self.sectioncheck == 12 or
+	self.level >= 1100 and self.sectioncheck == 13 or
+	self.level >= 1200 and self.sectioncheck == 14 or
+	self.level >= 1300 and self.sectioncheck == 15 or
+	self.level >= 1400 and self.sectioncheck == 16 or
+	self.level >= 1500 and self.sectioncheck == 17 then 
+		playSEOnce("caution")
+		self.sectioncheck = self.sectioncheck + 1
+	end
 	local new_drain = 0.0002 + self.level / 40000
 	self.drain = new_drain
 end
