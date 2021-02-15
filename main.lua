@@ -111,10 +111,10 @@ function love.draw()
 	love.graphics.setDefaultFilter("nearest", "nearest")
 	local width = love.graphics.getWidth()
 	local height = love.graphics.getHeight()
-	local scale_factor = math.min(width / 640, height / 480)
+	local scale_factor = math.min(width / 1280, height / 720)
 	love.graphics.translate(
-		(width - scale_factor * 640) / 2,
-		(height - scale_factor * 480) / 2
+		(width - scale_factor * 1280) / 2,
+		(height - scale_factor * 720) / 2
 	)
 	love.graphics.scale(scale_factor)
 
