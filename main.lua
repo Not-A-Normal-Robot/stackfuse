@@ -19,7 +19,7 @@ function love.load()
 	if not config.arr then config.arr = 2 end
 	if not config.sfx_volume then config.sfx_volume = 0.5 end
 	if not config.bgm_volume then config.bgm_volume = 0.5 end
-	
+
 	if config.secret == nil then config.secret = false
 	elseif config.secret == true then playSE("welcome") end
 
@@ -34,7 +34,7 @@ function love.load()
 			config.gamesettings[option[1]] = 1
 		end
 	end
-	
+
 	if not config.input then
 		scene = InputConfigScene()
 	else
@@ -63,7 +63,7 @@ function love.load()
 	return tostring(a.name):gsub("%d+",padnum) < tostring(b.name):gsub("%d+",padnum) end)
 	table.sort(rulesets, function(a,b)
 	return tostring(a.name):gsub("%d+",padnum) < tostring(b.name):gsub("%d+",padnum) end)
-	
+
 end
 
 local TARGET_FPS = 60
@@ -108,7 +108,7 @@ function love.draw()
 	love.graphics.push()
 
 	-- get offset matrix
-	love.graphics.setDefaultFilter("linear", "nearest")
+	love.graphics.setDefaultFilter("nearest", "nearest")
 	local width = love.graphics.getWidth()
 	local height = love.graphics.getHeight()
 	local scale_factor = math.min(width / 640, height / 480)
@@ -139,7 +139,7 @@ function love.keypressed(key, scancode)
 		else playSE("erase") end
 	-- function keys are reserved
 	elseif string.match(scancode, "^f[1-9]$") or string.match(scancode, "^f[1-9][0-9]+$") then
-		return	
+		return
 	-- escape is reserved for menu_back
 	elseif scancode == "escape" then
 		scene:onInputPress({input="menu_back", type="key", key=key, scancode=scancode})
@@ -159,7 +159,7 @@ function love.keyreleased(key, scancode)
 		scene:onInputRelease({input="menu_back", type="key", key=key, scancode=scancode})
 	-- function keys are reserved
 	elseif string.match(scancode, "^f[1-9]$") or string.match(scancode, "^f[1-9][0-9]+$") then
-		return	
+		return
 	-- handle all other keys; tab is reserved, but the input config scene keeps it from getting configured as a game input, so pass tab to the scene here
 	else
 		local input_released = nil
@@ -205,7 +205,7 @@ function love.joystickaxis(joystick, axis, value)
 		config.input.joysticks and
 		config.input.joysticks[joystick:getName()] and
 		config.input.joysticks[joystick:getName()].axes and
-		config.input.joysticks[joystick:getName()].axes[axis] 
+		config.input.joysticks[joystick:getName()].axes[axis]
 	then
 		if math.abs(value) >= 0.5 then
 			input_pressed = config.input.joysticks[joystick:getName()].axes[axis][value >= 0.5 and "positive" or "negative"]

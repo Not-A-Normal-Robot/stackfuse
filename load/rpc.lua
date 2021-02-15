@@ -5,7 +5,7 @@ DiscordRPC = {
 local success, RPC = pcall(require, "libs.discordRPC")
 if success then
 	DiscordRPC.loaded = true
-	DiscordRPC.appId = "599778517789573120"
+	DiscordRPC.appId = "396907430170066946"
 
 	function RPC.ready(userId, username, discriminator, avatar)
 		print(string.format("Discord: ready (%s, %s, %s, %s)", userId, username, discriminator, avatar))
@@ -34,7 +34,7 @@ if success then
 
 	RPC.initialize(DiscordRPC.appId, true)
 	local now = os.time(os.date("*t"))
-	
+
 	DiscordRPC.RPC = RPC
 	print("DiscordRPC successfully loaded.")
 else
@@ -46,8 +46,8 @@ DiscordRPC.presence = {
 		startTimestamp = now,
 		details = "Loading game...",
 		state = "",
-		largeImageKey = "icon2",
-		largeImageText = "Arcade Stacker",
+		largeImageKey = "stackfuse_icon",
+		largeImageText = "stackfuse",
 		smallImageKey = "",
 		smallImageText = ""
 }

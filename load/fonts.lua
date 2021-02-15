@@ -39,10 +39,14 @@ font_newBigFont = love.graphics.newImageFont(
 	"0123456789:."
 )
 
+font_newBigFont:setFilter("nearest", "nearest")
+
 font_newBiggerFont = love.graphics.newImageFont(
 	"res/fonts/newBiggerFont.png",
 	"0123456789:."
 )
+
+font_newBiggerFont:setFilter("nearest", "nearest")
 
 font_NEC = love.graphics.newImageFont(
 	"res/fonts/newMainFont.png",
@@ -50,8 +54,12 @@ font_NEC = love.graphics.newImageFont(
 	"`abcdefghijklmnopqrstuvwxyz{|}~™"
 )
 
+font_NEC:setFilter("nearest", "nearest")
+
 font_NEC_Big = love.graphics.newImageFont(
 	"res/fonts/newMainFontBig.png",
 	" !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_" ..
 	"`abcdefghijklmnopqrstuvwxyz{|}~™"
 )
+
+font_NEC_Big:setFilter("nearest", "nearest")

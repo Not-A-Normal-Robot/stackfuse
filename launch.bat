@@ -1,1 +1,1 @@
-.\dist\win32\love .
+.\dist\windows\love .
