@@ -17,7 +17,7 @@ MarathonA1Game.tagline = "Can you score enough points to reach the title of Gran
 
 function MarathonA1Game:new()
 	MarathonA1Game.super:new()
-	
+
 	self.roll_frames = 0
 	self.combo = 1
 	self.bravos = 0
@@ -31,7 +31,7 @@ function MarathonA1Game:new()
 		"S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9",
 		"GM"
 	}
-	
+
 	self.randomizer = History4RollsRandomizer()
 
 	self.lock_drop = false
@@ -199,7 +199,7 @@ function MarathonA1Game:drawScoringInfo()
 	love.graphics.printf("NEXT RANK", 256, 256, 90, "left")
 	love.graphics.printf("LEVEL", 256, 320, 40, "left")
 	local sg = self.grid:checkSecretGrade()
-	if sg >= 5 then 
+	if sg >= 5 then
 		love.graphics.printf("SECRET GRADE", 256, 432, 180, "left")
 	end
 
@@ -219,18 +219,18 @@ function MarathonA1Game:drawScoringInfo()
 		love.graphics.printf(self.SGnames[sg], 256, 448, 180, "left")
 	end
 	if self.bravos > 0 then love.graphics.printf(self.bravos, 304, 144, 40, "left") end
-	
+
 	leftsidebarUnderlay = love.graphics.newImage("res/img/leftsidebarUnderlay.png")
 	love.graphics.draw(leftsidebarUnderlay, 42, 80)
-	
+
 	love.graphics.setColor(1, 0, 0, 1)
 	love.graphics.rectangle("fill", 42, 400, 8, -math.floor((self.level % 100)*3.23) )
 	love.graphics.setColor(1, 1, 1, 1)
-	
+
 	leftsidebar = love.graphics.newImage("res/img/leftsidebar.png")
 	love.graphics.draw(leftsidebar, 42, 80)
 
-	
+
 	love.graphics.setFont(font_newBiggerFont)
 	love.graphics.printf(formatTime(self.frames), 65, 416, 160, "center")
 

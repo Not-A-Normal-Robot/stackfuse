@@ -14,7 +14,7 @@ Powerstack.tagline = "Stack fast and efficiently to increase the power multiplie
 
 function Powerstack:new()
 	Powerstack.super:new()
-	
+
 	self.level = 0
 	self.roll_frames = 0
 	self.combo = 1
@@ -152,7 +152,7 @@ function Powerstack:onPieceEnter()
 	self.level >= 1200 and self.sectioncheck == 14 or
 	self.level >= 1300 and self.sectioncheck == 15 or
 	self.level >= 1400 and self.sectioncheck == 16 or
-	self.level >= 1500 and self.sectioncheck == 17 then 
+	self.level >= 1500 and self.sectioncheck == 17 then
 		playSEOnce("caution")
 		self.sectioncheck = self.sectioncheck + 1
 	end
@@ -189,33 +189,45 @@ function Powerstack:drawScoringInfo()
 	love.graphics.setColor(1, 1, 1, 1)
 
 	love.graphics.setFont(font_NEC)
-	love.graphics.printf("NEXT", 129, 8, 40, "left")
-	love.graphics.printf("MULTIPLIER", 256, 128, 120, "left")
-	love.graphics.printf("LEVEL", 256, 312, 40, "left")	
+	love.graphics.printf("NEXT", 590, 8, 80, "center")
+	love.graphics.printf("MULTIPLIER", 256, 128, 240, "left")
+	love.graphics.printf("LEVEL", 256, 312, 80, "left")
 
 	love.graphics.setFont(font_NEC_Big)
-	love.graphics.printf("x"..string.format("%.3f",(self.multiplier/10)), 256, 160, 120, "left")
-	love.graphics.printf(self.level, 256, 336, 80, "left")
-	
+	love.graphics.printf("x"..string.format("%.3f",(self.multiplier/10)), 256, 160, 240, "left")
+	love.graphics.printf(self.level, 256, 336, 120, "left")
+
 	leftsidebarUnderlay = love.graphics.newImage("res/img/leftsidebarUnderlay.png")
-	love.graphics.draw(leftsidebarUnderlay, 42, 80)
-	
-	
+	love.graphics.draw(leftsidebarUnderlay, 42, 120)
+
+	-- funky multiplier bar
+	-- modulo 2 with frame counter for flashing
 	if self.powermode then
-	love.graphics.setColor(1, 0, 0, 1)
+	if (self.frames % 4) == 0 or (self.frames % 4) == 1 then
+		love.graphics.setColor(1, 0, 0, 1)
+	else
+		love.graphics.setColor(0.4, 0, 0, 1)
+	end
 	love.graphics.rectangle("fill", 42, 400, 8, -math.min((self.multiplier*6.4),321))
 	else
+
 	love.graphics.setColor(0, 1, 0, 1)
 	love.graphics.rectangle("fill", 42, 400, 8, -math.min((self.multiplier*6.4),321))
-	end 
+	end
 	love.graphics.setColor(1, 1, 1, 1)
-	
+
 	leftsidebar = love.graphics.newImage("res/img/leftsidebar.png")
 	love.graphics.draw(leftsidebar, 42, 80)
 
-	
+
 	love.graphics.setFont(font_newBiggerFont)
-	love.graphics.printf(formatTime(self.time_limit), 65, 416, 160, "center")
+	if (self.frames % 4) == 0 or (self.frames % 4) == 1 then
+		love.graphics.setColor(1, 1, 1, 1)
+	else
+		love.graphics.setColor(1, 1, 0.4, 1)
+	end
+	love.graphics.printf(formatTime(self.time_limit), 470, 620, 320, "center")
+
 end
 
 function Powerstack:getBackground()

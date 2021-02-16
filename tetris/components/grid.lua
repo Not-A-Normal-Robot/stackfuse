@@ -346,7 +346,7 @@ function Grid:markSquares()
 								self.grid[y+j][x+k].colour = "F"
 								self.grid[y+j][x+k].skin = "square"
 							end
-							
+
 						end
 						square_count = square_count + 1
 					end
@@ -391,7 +391,7 @@ function Grid:draw()
 			if self.grid[y][x] ~= empty then
 				if self.grid_age[y][x] < 2 then
 					love.graphics.setColor(0, 0, 0, 1)
-					love.graphics.draw(blocks[self.grid[y][x].skin]["F"], 48+x*16, y*16)
+					love.graphics.draw(blocks[self.grid[y][x].skin]["F"], 488+x*24, y*24)
 				else
 					if self.grid[y][x].skin == "bone" then
 						love.graphics.setColor(1, 1, 1, 1)
@@ -400,23 +400,23 @@ function Grid:draw()
 					else
 						love.graphics.setColor(1, 1, 1, 1)
 					end
-					love.graphics.draw(blocks[self.grid[y][x].skin][self.grid[y][x].colour], 48+x*16, y*16)
+					love.graphics.draw(blocks[self.grid[y][x].skin][self.grid[y][x].colour], 488+x*24, y*24)
 				end
 				if self.grid[y][x].skin ~= "bone" and self.grid[y][x].colour ~= "X" then
 					love.graphics.setColor(1, 1, 1, 0)
 					love.graphics.setLineWidth(1)
 					if y > 1 and self.grid[y-1][x] == empty or self.grid[y-1][x].colour == "X" then
-						love.graphics.line(48.0+x*16, -0.5+y*16, 64.0+x*16, -0.5+y*16)
+						love.graphics.line(48.0+x*24, -0.5+y*24, 64.0+x*24, -0.5+y*24)
 					end
 					if y < self.height and self.grid[y+1][x] == empty or
 					(y + 1 > self.height or self.grid[y+1][x].colour == "X") then
-						love.graphics.line(48.0+x*16, 16.5+y*16, 64.0+x*16, 16.5+y*16)
+						love.graphics.line(48.0+x*24, 16.5+y*24, 64.0+x*24, 24.5+y*24)
 					end
 					if x > 1 and self.grid[y][x-1] == empty then
-						love.graphics.line(47.5+x*16, -0.0+y*16, 47.5+x*16, 16.0+y*16)
+						love.graphics.line(47.5+x*24, -0.0+y*24, 47.5+x*24, 24.0+y*24)
 					end
 					if x < self.width and self.grid[y][x+1] == empty then
-						love.graphics.line(64.5+x*16, -0.0+y*16, 64.5+x*16, 16.0+y*16)
+						love.graphics.line(64.5+x*24, -0.0+y*24, 64.5+x*24, 24.0+y*24)
 					end
 				end
 			end
@@ -428,24 +428,24 @@ function Grid:drawOutline()
 	for y = 5, self.height do
 		for x = 1, self.width do
 			if self.grid[y][x].colour == "X" then
-				love.graphics.setColor(1, 1, 1, 1 --[[- self.grid_age[y][x] / 15]])
-				love.graphics.draw(blocks[self.grid[y][x].skin][self.grid[y][x].colour], 48+x*16, y*16)
+				love.graphics.setColor(1, 1, 1, 1 - self.grid_age[y][x] / 15)
+				love.graphics.draw(blocks[self.grid[y][x].skin][self.grid[y][x].colour], 488+x*24, y*24)
 			end
 			if self.grid[y][x] ~= empty and self.grid[y][x].colour ~= "X" then
 				love.graphics.setColor(1, 1, 1, 1)
 				love.graphics.setLineWidth(1)
 				if y > 1 and self.grid[y-1][x] == empty or self.grid[y-1][x].colour == "X" then
-					love.graphics.line(48.0+x*16, -0.5+y*16, 64.0+x*16, -0.5+y*16)
+					love.graphics.line(48.0+x*24, -0.5+y*24, 64.0+x*24, -0.5+y*24)
 				end
 				if y < self.height and self.grid[y+1][x] == empty or
 				(y + 1 > self.height or self.grid[y+1][x].colour == "X") then
-					love.graphics.line(48.0+x*16, 16.5+y*16, 64.0+x*16, 16.5+y*16)
+					love.graphics.line(48.0+x*24, 16.5+y*24, 64.0+x*24, 24.5+y*24)
 				end
 				if x > 1 and self.grid[y][x-1] == empty then
-					love.graphics.line(47.5+x*16, -0.0+y*16, 47.5+x*16, 16.0+y*16)
+					love.graphics.line(47.5+x*24, -0.0+y*24, 47.5+x*24, 24.0+y*24)
 				end
 				if x < self.width and self.grid[y][x+1] == empty then
-					love.graphics.line(64.5+x*16, -0.0+y*16, 64.5+x*16, 16.0+y*16)
+					love.graphics.line(64.5+x*24, -0.0+y*24, 64.5+x*24, 16.0+y*24)
 				end
 			end
 		end
@@ -466,23 +466,23 @@ function Grid:drawInvisible(opacity_function, garbage_opacity_function, lock_fla
 					opacity = opacity_function(self.grid_age[y][x])
 				end
 				love.graphics.setColor(brightness, brightness, brightness, opacity)
-				love.graphics.draw(blocks[self.grid[y][x].skin][self.grid[y][x].colour], 48+x*16, y*16)
+				love.graphics.draw(blocks[self.grid[y][x].skin][self.grid[y][x].colour], 488+x*24, y*24)
 				if lock_flash then
 					if opacity > 0 and self.grid[y][x].colour ~= "X" then
 						love.graphics.setColor(0.64, 0.64, 0.64)
 						love.graphics.setLineWidth(1)
 						if y > 1 and self.grid[y-1][x] == empty or self.grid[y-1][x].colour == "X" then
-							love.graphics.line(48.0+x*16, -0.5+y*16, 64.0+x*16, -0.5+y*16)
+							love.graphics.line(48.0+x*24, -0.5+y*24, 64.0+x*24, -0.5+y*24)
 						end
 						if y < self.height and self.grid[y+1][x] == empty or
 						(y + 1 > self.height or self.grid[y+1][x].colour == "X") then
-							love.graphics.line(48.0+x*16, 16.5+y*16, 64.0+x*16, 16.5+y*16)
+							love.graphics.line(48.0+x*24, 16.5+y*24, 64.0+x*24, 16.5+y*24)
 						end
 						if x > 1 and self.grid[y][x-1] == empty then
-							love.graphics.line(47.5+x*16, -0.0+y*16, 47.5+x*16, 16.0+y*16)
+							love.graphics.line(47.5+x*24, -0.0+y*24, 47.5+x*24, 16.0+y*24)
 						end
 						if x < self.width and self.grid[y][x+1] == empty then
-							love.graphics.line(64.5+x*16, -0.0+y*16, 64.5+x*16, 16.0+y*16)
+							love.graphics.line(64.5+x*24, -0.0+y*24, 64.5+x*24, 16.0+y*24)
 						end
 					end
 				end
@@ -497,7 +497,7 @@ function Grid:drawCustom(colour_function, gamestate)
         When called, calls the supplied function on every block passing the block itself as argument
         as well as coordinates and the grid_age value of the same cell.
         Should return a RGBA colour for the block, as well as the opacity of the stack outline (0 for no outline).
-        
+
         gamestate: the gamemode instance itself to pass in colour_function
     ]]
 	for y = 5, self.height do
@@ -509,22 +509,22 @@ function Grid:drawCustom(colour_function, gamestate)
 					A = 1 - self.grid_age[y][x] / 15
 				end
 				love.graphics.setColor(R, G, B, A)
-				love.graphics.draw(blocks[self.grid[y][x].skin][self.grid[y][x].colour], 48+x*16, y*16)
+				love.graphics.draw(blocks[self.grid[y][x].skin][self.grid[y][x].colour], 488+x*24, y*24)
                 if outline > 0 and self.grid[y][x].colour ~= "X" then
                     love.graphics.setColor(1, 1, 1, outline)
                     love.graphics.setLineWidth(1)
                     if y > 1 and self.grid[y-1][x] == empty or self.grid[y-1][x].colour == "X" then
-						love.graphics.line(48.0+x*16, -0.5+y*16, 64.0+x*16, -0.5+y*16)
+						love.graphics.line(48.0+x*24, -0.5+y*24, 64.0+x*24, -0.5+y*24)
 					end
 					if y < self.height and self.grid[y+1][x] == empty or
 					(y + 1 > self.height or self.grid[y+1][x].colour == "X") then
-						love.graphics.line(48.0+x*16, 16.5+y*16, 64.0+x*16, 16.5+y*16)
+						love.graphics.line(48.0+x*24, 16.5+y*24, 64.0+x*24, 16.5+y*24)
 					end
 					if x > 1 and self.grid[y][x-1] == empty then
-						love.graphics.line(47.5+x*16, -0.0+y*16, 47.5+x*16, 16.0+y*16)
+						love.graphics.line(47.5+x*24, -0.0+y*24, 47.5+x*24, 16.0+y*24)
 					end
 					if x < self.width and self.grid[y][x+1] == empty then
-						love.graphics.line(64.5+x*16, -0.0+y*16, 64.5+x*16, 16.0+y*16)
+						love.graphics.line(64.5+x*24, -0.0+y*24, 64.5+x*24, 16.0+y*24)
 					end
                 end
 			end

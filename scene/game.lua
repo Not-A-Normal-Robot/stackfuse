@@ -46,20 +46,17 @@ function GameScene:render()
 	love.graphics.draw(
 		backgrounds[self.game:getBackground()],
 		0, 0, 0,
-		0.5, 0.5
+		1, 1
 	)
+
+	love.graphics.draw(misc_graphics["shadoweffect"], 0, 0)
 
 	-- game frame
 	if self.game.grid.width == 10 and self.game.grid.height == 24 then
-		love.graphics.draw(misc_graphics["frame"], 0, 0)
+		love.graphics.draw(misc_graphics["frame"], 485, 93)
 	end
-	
-	love.graphics.setColor(0, 0, 0, 200)
-	love.graphics.rectangle(
-		"fill", 64, 80,
-		16 * self.game.grid.width, 16 * (self.game.grid.height - 4)
-	)
-	
+
+
 	if self.game.grid.width ~= 10 or self.game.grid.height ~= 24 then
 		love.graphics.setColor(174/255, 83/255, 76/255, 1)
 		love.graphics.setLineWidth(8)

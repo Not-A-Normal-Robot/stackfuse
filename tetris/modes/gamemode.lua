@@ -146,7 +146,7 @@ function GameMode:update(inputs, ruleset)
 		self:onAttemptPieceRotate(self.piece)
 		if self.immobile_spin_bonus and self.piece ~= nil then
 			if self.piece:isDropBlocked(self.grid) and
-			self.piece:isMoveBlocked(self.grid, { x=-1, y=0 }) and 
+			self.piece:isMoveBlocked(self.grid, { x=-1, y=0 }) and
 			self.piece:isMoveBlocked(self.grid, { x=1, y=0 }) and
 			self.piece:isMoveBlocked(self.grid, { x=0, y=-1 }) then
 				self.piece.spin = true
@@ -155,7 +155,7 @@ function GameMode:update(inputs, ruleset)
 			end
 		end
 	end
-	
+
 	if self.piece == nil then
 		self:processDelays(inputs, ruleset)
 	else
@@ -263,7 +263,7 @@ end
 function GameMode:whilePieceActive() end
 function GameMode:onAttemptPieceMove(piece) end
 function GameMode:onAttemptPieceRotate(piece) end
-function GameMode:onPieceLock(piece, cleared_row_count) 
+function GameMode:onPieceLock(piece, cleared_row_count)
 	playSE("lock")
 end
 
@@ -282,11 +282,10 @@ end
 
 function GameMode:onGameOver()
 	switchBGM(nil)
-	love.graphics.setColor(0, 0, 0, 1 - 2 ^ (-self.game_over_frames / 30))
-	love.graphics.rectangle(
-		"fill", 64, 80,
-		16 * self.grid.width, 16 * (self.grid.height - 4)
-	)
+	if self.game_over_frames == 1 then
+		playSEOnce("topout")
+	end
+	love.graphics.draw(misc_graphics["ded"], 0, 0)
 end
 
 function GameMode:onGameComplete()
@@ -530,7 +529,7 @@ function GameMode:drawNextQueue(ruleset)
 		for index, offset in pairs(offsets) do
 			local x = offset.x + ruleset.draw_offsets[piece].x + ruleset.spawn_positions[piece].x
 			local y = offset.y + ruleset.draw_offsets[piece].y + 4.7
-			love.graphics.draw(blocks[skin][colourscheme[piece]], pos_x+x*16, pos_y+y*16)
+			love.graphics.draw(blocks[skin][colourscheme[piece]], pos_x+x*24, pos_y+y*24)
 		end
 	end
 	for i = 1, self.next_queue_length do
@@ -539,18 +538,18 @@ function GameMode:drawNextQueue(ruleset)
 		local skin = self.next_queue[i].skin
 		local rotation = self.next_queue[i].orientation
 		if config.side_next then -- next at side
-			drawPiece(next_piece, skin, ruleset.block_offsets[next_piece][rotation], 192, -16+i*48)
+			drawPiece(next_piece, skin, ruleset.block_offsets[next_piece][rotation], 192, -24+i*48)
 		else -- next at top
-			drawPiece(next_piece, skin, ruleset.block_offsets[next_piece][rotation], -16+i*80, -32)
+			drawPiece(next_piece, skin, ruleset.block_offsets[next_piece][rotation], (-44+i*108)+448, -32)
 		end
 	end
 	if self.hold_queue ~= nil and self.enable_hold then
 		self:setHoldOpacity()
 		drawPiece(
-			self.hold_queue.shape, 
-			self.hold_queue.skin, 
+			self.hold_queue.shape,
+			self.hold_queue.skin,
 			ruleset.block_offsets[self.hold_queue.shape][self.hold_queue.orientation],
-			-16, -32
+			404, -32
 		)
 	end
 	return false
@@ -647,7 +646,7 @@ function GameMode:drawSectionTimesWithSplits(current_section)
 			love.graphics.printf(formatTime(split_time), split_x, 40 + 20 * section, 90, "left")
 		end
 	end
-	
+
 	love.graphics.printf(formatTime(self.frames - self.section_start_time), section_x, 40 + 20 * current_section, 90, "left")
 	love.graphics.printf(formatTime(self.frames), split_x, 40 + 20 * current_section, 90, "left")
 end
