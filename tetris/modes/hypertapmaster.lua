@@ -193,46 +193,40 @@ function MarathonA1Game:drawScoringInfo()
 	love.graphics.setColor(1, 1, 1, 1)
 
 	love.graphics.setFont(font_NEC)
-	love.graphics.printf("NEXT", 64, 32, 40, "left")
-	love.graphics.printf("GRADE", 256, 112, 40, "left")
-	love.graphics.printf("SCORE", 256, 192, 40, "left")
-	love.graphics.printf("NEXT RANK", 256, 256, 90, "left")
-	love.graphics.printf("LEVEL", 256, 320, 40, "left")
+	love.graphics.printf("NEXT", 590, 8, 80, "center")
+	love.graphics.printf("GRADE", 776, 168, 80, "left")
+	love.graphics.printf("SCORE", 776, 288, 80, "left")
+	love.graphics.printf("NEXT RANK", 776, 384, 180, "left")
+	love.graphics.printf("LEVEL", 776, 480, 80, "left")
 	local sg = self.grid:checkSecretGrade()
 	if sg >= 5 then
-		love.graphics.printf("SECRET GRADE", 256, 432, 180, "left")
+		love.graphics.printf("SECRET GRADE", 776, 648, 360, "left")
 	end
 
-	if self.bravos > 0 then love.graphics.printf("BRAVO", 304, 128, 40, "left") end
+	if self.bravos > 0 then love.graphics.printf("BRAVO", 824, 192, 80, "left") end
 
 	love.graphics.setFont(font_NEC_Big)
-	love.graphics.printf(self.score, 256, 208, 90, "left")
+	love.graphics.printf(self.score, 776, 312, 180, "left")
 	if self.gm_conditions["level300"] and self.gm_conditions["level500"] and self.gm_conditions["level999"] then
-		love.graphics.printf("GM", 256, 128, 90, "left")
+		love.graphics.printf("GM", 776, 192, 180, "left")
 	else
-		love.graphics.printf(getRankForScore(self.score).rank, 256, 128, 90, "left")
+		love.graphics.printf(getRankForScore(self.score).rank, 776, 192, 180, "left")
 	end
-	love.graphics.printf(getRankForScore(self.score).next, 256, 272, 90, "left")
-	love.graphics.printf(self.level, 256, 336, 80, "right")
-	love.graphics.printf(self:getSectionEndLevel(), 256, 370, 80, "right")
+	love.graphics.printf(getRankForScore(self.score).next, 776, 408, 180, "left")
+	love.graphics.printf(self.level, 710, 504, 160, "right")
+	love.graphics.printf(self:getSectionEndLevel(), 710, 555, 160, "right")
 	if sg >= 5 then
-		love.graphics.printf(self.SGnames[sg], 256, 448, 180, "left")
+		love.graphics.printf(self.SGnames[sg], 776, 672, 360, "left")
 	end
-	if self.bravos > 0 then love.graphics.printf(self.bravos, 304, 144, 40, "left") end
+	if self.bravos > 0 then love.graphics.printf(self.bravos, 824, 216, 80, "left") end
 
-	leftsidebarUnderlay = love.graphics.newImage("res/img/leftsidebarUnderlay.png")
-	love.graphics.draw(leftsidebarUnderlay, 42, 80)
 
 	love.graphics.setColor(1, 0, 0, 1)
-	love.graphics.rectangle("fill", 42, 400, 8, -math.floor((self.level % 100)*3.23) )
+	love.graphics.rectangle("fill", 501, 600, 6, -math.floor((self.level % 100)*4.8) )
 	love.graphics.setColor(1, 1, 1, 1)
 
-	leftsidebar = love.graphics.newImage("res/img/leftsidebar.png")
-	love.graphics.draw(leftsidebar, 42, 80)
-
-
 	love.graphics.setFont(font_newBiggerFont)
-	love.graphics.printf(formatTime(self.frames), 65, 416, 160, "center")
+	love.graphics.printf(formatTime(self.frames), 470, 620, 320, "center")
 
 end
 

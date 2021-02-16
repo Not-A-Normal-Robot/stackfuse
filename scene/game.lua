@@ -93,10 +93,10 @@ function GameScene:render()
 	end
 
 	self.game:drawCustom()
-
-	love.graphics.setFont(font_3x5_2)
+	love.graphics.setColor(1, 1, 1, 1)
+	love.graphics.setFont(font_NEC)
 	if config.gamesettings.display_gamemode == 1 then
-		love.graphics.printf(self.game.name .. " - " .. self.ruleset.name, 0, 460, 640, "left")
+		love.graphics.printf(self.game.name .. " - " .. self.ruleset.name, 0, 680, 1280, "left")
 	end
 
 	love.graphics.setFont(font_3x5_3)

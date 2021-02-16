@@ -130,11 +130,6 @@ function Powerstack:advanceOneFrame()
             self.game_over = true
         end
 	end
-	return true
-end
-
-function Powerstack:onPieceEnter()
-	self.level = self.level + 1
 	if self.level >= 50 and self.sectioncheck == 0 or
 	self.level >= 100 and self.sectioncheck == 1 or
 	self.level >= 150 and self.sectioncheck == 2 or
@@ -156,6 +151,12 @@ function Powerstack:onPieceEnter()
 		playSEOnce("caution")
 		self.sectioncheck = self.sectioncheck + 1
 	end
+	return true
+end
+
+function Powerstack:onPieceEnter()
+	self.level = self.level + 1
+
 	local new_drain = 0.0002 + self.level / 40000
 	self.drain = new_drain
 end
@@ -190,15 +191,12 @@ function Powerstack:drawScoringInfo()
 
 	love.graphics.setFont(font_NEC)
 	love.graphics.printf("NEXT", 590, 8, 80, "center")
-	love.graphics.printf("MULTIPLIER", 256, 128, 240, "left")
-	love.graphics.printf("LEVEL", 256, 312, 80, "left")
+	love.graphics.printf("MULTIPLIER", 776, 168, 240, "left")
+	love.graphics.printf("LEVEL", 776, 352, 80, "left")
 
 	love.graphics.setFont(font_NEC_Big)
-	love.graphics.printf("x"..string.format("%.3f",(self.multiplier/10)), 256, 160, 240, "left")
-	love.graphics.printf(self.level, 256, 336, 120, "left")
-
-	leftsidebarUnderlay = love.graphics.newImage("res/img/leftsidebarUnderlay.png")
-	love.graphics.draw(leftsidebarUnderlay, 42, 120)
+	love.graphics.printf("x"..string.format("%.3f",(self.multiplier/10)), 776, 200, 240, "left")
+	love.graphics.printf(self.level, 776, 376, 120, "left")
 
 	-- funky multiplier bar
 	-- modulo 2 with frame counter for flashing
@@ -208,16 +206,12 @@ function Powerstack:drawScoringInfo()
 	else
 		love.graphics.setColor(0.4, 0, 0, 1)
 	end
-	love.graphics.rectangle("fill", 42, 400, 8, -math.min((self.multiplier*6.4),321))
+	love.graphics.rectangle("fill", 501, 601, 6, -math.min((self.multiplier*9.6),480))
 	else
-
 	love.graphics.setColor(0, 1, 0, 1)
-	love.graphics.rectangle("fill", 42, 400, 8, -math.min((self.multiplier*6.4),321))
+	love.graphics.rectangle("fill", 501, 600, 6, -math.min((self.multiplier*9.6),480))
 	end
 	love.graphics.setColor(1, 1, 1, 1)
-
-	leftsidebar = love.graphics.newImage("res/img/leftsidebar.png")
-	love.graphics.draw(leftsidebar, 42, 80)
 
 
 	love.graphics.setFont(font_newBiggerFont)
