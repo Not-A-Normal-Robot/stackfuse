@@ -69,71 +69,33 @@ function Liftoff:getLevel()
 end
 
 function Liftoff:getARE()
-	local level = self.level
-	if (level < 350) then return 20
-	elseif (level < 500) then return 16
-	elseif (level < 800) then return 12
-	elseif (level < 900) then return 11
-	elseif (level < 1000) then return 10
-	elseif (level < 1100) then return 9
-	elseif (level < 1200) then return 8
-	elseif (level < 1300) then return 7
-	elseif (level < 1400) then return 6
-	else return 5
-	end
+	return 16
 end
 
 function Liftoff:getLineARE()
-	local level = self.level
-	if (level < 350) then return 20
-	elseif (level < 500) then return 16
-	elseif (level < 800) then return 12
-	elseif (level < 900) then return 11
-	elseif (level < 1000) then return 10
-	elseif (level < 1100) then return 9
-	elseif (level < 1200) then return 8
-	elseif (level < 1300) then return 7
-	elseif (level < 1400) then return 6
-	else return 5
-	end
+	return 16
 end
 
 function Liftoff:getDasLimit()
-	local level = self.level
-	if (level < 500) then return 15
-	elseif (level < 800) then return 12
-	elseif (level < 1000) then return 10
-	elseif (level < 1200) then return 8
-	elseif (level < 1300) then return 7
-	elseif (level < 1400) then return 6
-	else return 5
+	else return 12
 	end
 end
 
 function Liftoff:getLineClearDelay()
-	local level = self.level
-	if (level < 500) then return 5
-	elseif (level < 800) then return 3
-	elseif (level < 1000) then return 2
-	else return 0
-	end
+	return 16
 end
 
 function Liftoff:getLockDelay()
 	local level = self.level
-	if (level < 350) then return 30
-	elseif (level < 400) then return 26
-	elseif (level < 500) then return 23
-	elseif (level < 600) then return 20
-	elseif (level < 700) then return 17
-	elseif (level < 800) then return 14
-	elseif (level < 900) then return 11
-	elseif (level < 1000) then return 10
-	elseif (level < 1100) then return 9
-	elseif (level < 1200) then return 8
-	elseif (level < 1300) then return 7
-	elseif (level < 1400) then return 6
-	else return 5
+	if (level < 6) then return 30 --level 1-5
+	elseif (level < 9) then return 27 --lv6-8
+	elseif (level < 10) then return 30 --lv9
+	elseif (level < 20) then return 25 --lv10-19
+	elseif (level < 22) then return 22 --lv20-21
+	elseif (level < 25) then return 20 --lv22-24
+	elseif (level < 28) then return 30 --lv25-27
+	elseif (level < 30) then return 25 --lv 28-29
+	else return 20 --level 30+
 	end
 end
 
