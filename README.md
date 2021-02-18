@@ -23,9 +23,9 @@ No, stackfuse won't have its own official Discord server. Ever. Maintaining a pu
 
 ### Planned modes:
 
-Protolock: The version of G-Lock that I never really bothered finishing. No "strike system", fluctuating speeds, ends at 500 pieces.
-Clockwork: Time is ticking. A survival mode with no win condition, the only goal is to survive for as long as possible. The ticking increases over time, and such, your placement limits will decrease, leading to eventual topout.
-Loop: Has a loop system. After 50 Lines you earn one Loop, you roll back in levels but timings shorten. Constant 1G after 1 loop, constant 2G after 3 loops. At 5 loops, you have reached the fastest speeds. Reach 400 lines for a surprise.
+* Protolock: The version of G-Lock that I never really bothered finishing. No "strike system", fluctuating speeds, ends at 500 pieces.
+* Clockwork: Time is ticking. A survival mode with no win condition, the only goal is to survive for as long as possible. The ticking increases over time, and such, your placement limits will decrease, leading to eventual topout.
+* Loop: Has a loop system. After 50 Lines you earn one Loop, you roll back in levels but timings shorten. Constant 1G after 1 loop, constant 2G after 3 loops. At 5 loops, you have reached the fastest speeds. Reach 400 lines for a surprise.
 
 ## Playing the game
 
