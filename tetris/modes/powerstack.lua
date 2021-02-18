@@ -180,6 +180,19 @@ function Powerstack:onLineClear(cleared_row_count)
 	self.time_limit = new_time_limit
 end
 
+--[[forced move reset because i can do what i want. eat my ass
+function GLock:whilePieceActive()
+	if not self.piece:isMoveBlocked(self.grid, {x=-1, y=0}) and self.prev_inputs["left"]
+	or not self.piece:isMoveBlocked(self.grid, {x=1, y=0}) and self.prev_inputs["right"] then
+		self.piece.lock_delay = 0
+	end
+	if self.piece:isDropBlocked(self.grid) then
+		self.time_active = self.time_active + 1
+		if self.time_active >= 240 then self.piece.locked = true end
+	end
+end
+]]
+
 function Powerstack:drawGrid()
 	self.grid:draw()
 	self:drawGhostPiece(ruleset)

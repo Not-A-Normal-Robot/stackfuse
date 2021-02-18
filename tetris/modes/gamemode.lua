@@ -289,7 +289,6 @@ function GameMode:onGameOver()
 end
 
 function GameMode:onGameComplete()
-	self:onGameOver()
 end
 
 -- DAS functions
