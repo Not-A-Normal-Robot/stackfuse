@@ -77,8 +77,7 @@ function Liftoff:getLineARE()
 end
 
 function Liftoff:getDasLimit()
-	else return 12
-	end
+	return 12
 end
 
 function Liftoff:getLineClearDelay()
@@ -184,6 +183,7 @@ function Liftoff:onPieceLock(piece, cleared_row_count)
 	local emptyGarbage = {"e", "e", "e", "e", "e", "e", "e", "e", "e", "e"}
 	if self.piecelimit >= self:getPieceLimit() then
 		self.grid:garbageRise(emptyGarbage)
+		playSEOnce("garbage")
 		self.piecelimit = 0
 	end
 	self.piecelimit = self.piecelimit + 1

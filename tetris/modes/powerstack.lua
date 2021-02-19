@@ -24,6 +24,7 @@ function Powerstack:new()
 	self.time_limit = 5400
 	self.randomizer = History4RollsRandomizer()
 	self.powermode = false
+	self.lol = 0
 
 	self.lock_drop = false
 	self.enable_hard_drop = true
@@ -122,13 +123,21 @@ function Powerstack:advanceOneFrame()
 		end
 		if self.powermode then
 		self.multiplier = (math.min (math.max(2, self.multiplier - (self.drain*4)), 50))
+		playSEOnce("powermode")
 		else
 		self.multiplier = (math.min (math.max(2, self.multiplier - self.drain), 50))
+		love.audio.stop(sounds.powermode)
 		end
 		self.time_limit = math.max(self.time_limit - 1, 0)
         if self.time_limit <= 0 and self.piece == nil then
             self.game_over = true
         end
+		if self.lol == 0 and self.powermode then
+			self.lol = 1
+		elseif self.lol == 1 and not self.powermode then
+			playSEOnce("danger")
+			self.lol = 0
+		end
 	end
 	if self.level >= 50 and self.sectioncheck == 0 or
 	self.level >= 100 and self.sectioncheck == 1 or
@@ -168,6 +177,8 @@ local timeadder = {0.1, 0.5, 1, 2}
 
 function Powerstack:onLineClear(cleared_row_count)
 	if self.powermode then
+		love.audio.stop(sounds.erase)
+		playSE("powererase")
 		local new_level = self.level + cleared_row_levels_power[cleared_row_count]
 		self.level = new_level
 	else
@@ -228,10 +239,12 @@ function Powerstack:drawScoringInfo()
 
 
 	love.graphics.setFont(font_newBiggerFont)
-	if (self.frames % 4) == 0 or (self.frames % 4) == 1 then
-		love.graphics.setColor(1, 1, 1, 1)
-	else
-		love.graphics.setColor(1, 1, 0.4, 1)
+	if self.time_limit <= 900 then
+		if (self.frames % 4) == 0 or (self.frames % 4) == 1 then
+			love.graphics.setColor(1, 1, 1, 1)
+		else
+			love.graphics.setColor(1, 1, 0.4, 1)
+		end
 	end
 	love.graphics.printf(formatTime(self.time_limit), 470, 620, 320, "center")
 
