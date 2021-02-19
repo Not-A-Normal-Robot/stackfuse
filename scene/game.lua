@@ -94,12 +94,12 @@ function GameScene:render()
 
 	self.game:drawCustom()
 	love.graphics.setColor(1, 1, 1, 1)
-	love.graphics.setFont(font_NEC)
+	love.graphics.setFont(font_New)
 	if config.gamesettings.display_gamemode == 1 then
-		love.graphics.printf(self.game.name .. " - " .. self.ruleset.name, 0, 680, 1280, "left")
+		love.graphics.printf(self.game.name .. " // " .. self.ruleset.name, 16, 680, 1280, "left")
 	end
 
-	love.graphics.setFont(font_3x5_3)
+	love.graphics.setFont(font_New)
 	if self.paused then love.graphics.print("PAUSED!", 80, 100) end
 
 	if self.game.completed then

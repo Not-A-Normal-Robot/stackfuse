@@ -13,16 +13,7 @@ local main_menu_screens = {
 local mainmenuidle = {
 	"Idle",
 	"On title screen",
-	"On main menu screen",
-	"Twiddling their thumbs",
-	"Admiring the main menu's BG",
-	"Waiting for spring to come",
-	"Actually not playing",
-	"Contemplating collecting stars",
-	"Preparing to put the block!!",
-	"Having a nap",
-	"In menus",
-	"Bottom text",
+	"On main menu screen"
 }
 
 function TitleScene:new()
@@ -49,38 +40,39 @@ function TitleScene:update()
 end
 
 function TitleScene:render()
-	love.graphics.setFont(font_3x5_2)
+	love.graphics.setFont(font_New_Big)
 
 	love.graphics.setColor(1, 1, 1, 1 - self.snow_bg_opacity)
 	love.graphics.draw(
 		backgrounds["title"],
 		0, 0, 0,
-		0.5, 0.5
+		1,1
 	)
 
 	love.graphics.setColor(1, 1, 1, self.snow_bg_opacity)
 	love.graphics.draw(
 		backgrounds["snow"],
 		0, 0, 0,
-		0.5, 0.5
+		1, 1
 	)
 
-	love.graphics.draw(
-		misc_graphics["santa"],
-		400, -205 + self.y_offset,
-		0, 0.5, 0.5
-	)
 	love.graphics.print("Happy Holidays!", 320, -100 + self.y_offset)
 
 	love.graphics.setColor(1, 1, 1, 1)
 	love.graphics.print(self.restart_message and "Restart Cambridge..." or "", 0, 0)
 
 	love.graphics.setColor(1, 1, 1, 0.5)
-	love.graphics.rectangle("fill", 20, 278 + 20 * self.main_menu_state, 160, 22)
+	love.graphics.rectangle("fill", 440, 278 + 80 * self.main_menu_state, 400, 70)
 
+	--first we draw the text shadow...
+	love.graphics.setColor(0, 0, 0, 0.5)
+	for i, screen in pairs(main_menu_screens) do
+		love.graphics.printf(screen.title, 462, 282 + 80 * i, 360, "center")
+	end
+	--and then the main text.
 	love.graphics.setColor(1, 1, 1, 1)
 	for i, screen in pairs(main_menu_screens) do
-		love.graphics.printf(screen.title, 40, 280 + 20 * i, 120, "left")
+		love.graphics.printf(screen.title, 460, 280 + 80 * i, 360, "center")
 	end
 
 end

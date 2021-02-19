@@ -226,33 +226,16 @@ function Liftoff:drawScoringInfo()
 	Liftoff.super.drawScoringInfo(self)
 	love.graphics.setColor(1, 1, 1, 1)
 
-	love.graphics.setFont(font_NEC)
+	love.graphics.setFont(font_New)
 	love.graphics.printf("NEXT", 590, 8, 80, "center")
 	love.graphics.printf("SCORE", 776, 200, 240, "left")
 	love.graphics.printf("LINES", 776, 340, 80, "left")
 	love.graphics.printf("LEVEL", 776, 480, 80, "left")
 
-	love.graphics.setFont(font_NEC_Big)
+	love.graphics.setFont(font_New_Big)
 	love.graphics.printf(self.score, 776, 232, 240, "left")
 	love.graphics.printf(self.lines, 776, 372, 120, "left")
 	love.graphics.printf(self.level, 776, 512, 120, "left")
-
-	-- funky multiplier bar
-	-- modulo 2 with frame counter for flashing
-	--[[
-	if self.powermode then
-		if (self.frames % 4) == 0 or (self.frames % 4) == 1 then
-			love.graphics.setColor(1, 0, 0, 1)
-		else
-			love.graphics.setColor(0.4, 0, 0, 1)
-		end
-		love.graphics.rectangle("fill", 501, 601, 6, -math.min((self.multiplier*9.6),480))
-	else
-		love.graphics.setColor(0, 1, 0, 1)
-		love.graphics.rectangle("fill", 501, 600, 6, -math.min((self.multiplier*9.6),480))
-	end
-	love.graphics.setColor(1, 1, 1, 1)
-	]]
 
 	if (self:getPieceLimit()-self.piecelimit) <= 3 and (self:getPieceLimit()-self.piecelimit) ~= 0 then
 	love.graphics.setColor(1, 1, 1, 1)
@@ -264,7 +247,7 @@ function Liftoff:drawScoringInfo()
 	love.graphics.rectangle("fill", 501, 600, 6, -math.min(((self.piecelimit/self:getPieceLimit())*480),480))
 
 
-	love.graphics.setFont(font_newBiggerFont)
+	love.graphics.setFont(font_New_Big)
 	if (self.frames % 4) == 0 or (self.frames % 4) == 1 then
 		love.graphics.setColor(1, 1, 1, 1)
 	else

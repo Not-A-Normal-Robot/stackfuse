@@ -34,32 +34,7 @@ font_8x11 = love.graphics.newImageFont(
 
 --[[ CUSTOM FONTS ]]
 
-font_newBigFont = love.graphics.newImageFont(
-	"res/fonts/newBigFont.png",
-	"0123456789:."
-)
 
-font_newBigFont:setFilter("nearest", "nearest")
+font_New = love.graphics.newFont("res/fonts/JetBrainsMono-Regular.ttf", 24)
 
-font_newBiggerFont = love.graphics.newImageFont(
-	"res/fonts/newBiggerFont.png",
-	"0123456789:."
-)
-
-font_newBiggerFont:setFilter("nearest", "nearest")
-
-font_NEC = love.graphics.newImageFont(
-	"res/fonts/newMainFont.png",
-	" !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_" ..
-	"`abcdefghijklmnopqrstuvwxyz{|}~™"
-)
-
-font_NEC:setFilter("nearest", "nearest")
-
-font_NEC_Big = love.graphics.newImageFont(
-	"res/fonts/newMainFontBig.png",
-	" !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_" ..
-	"`abcdefghijklmnopqrstuvwxyz{|}~™"
-)
-
-font_NEC_Big:setFilter("nearest", "nearest")
+font_New_Big = love.graphics.newFont("res/fonts/JetBrainsMono-Regular.ttf", 48)

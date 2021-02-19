@@ -192,7 +192,7 @@ function MarathonA1Game:drawScoringInfo()
 	MarathonA1Game.super.drawScoringInfo(self)
 	love.graphics.setColor(1, 1, 1, 1)
 
-	love.graphics.setFont(font_NEC)
+	love.graphics.setFont(font_New)
 	love.graphics.printf("NEXT", 590, 8, 80, "center")
 	love.graphics.printf("GRADE", 776, 168, 80, "left")
 	love.graphics.printf("SCORE", 776, 288, 80, "left")
@@ -205,7 +205,7 @@ function MarathonA1Game:drawScoringInfo()
 
 	if self.bravos > 0 then love.graphics.printf("BRAVO", 824, 192, 80, "left") end
 
-	love.graphics.setFont(font_NEC_Big)
+	love.graphics.setFont(font_New_Big)
 	love.graphics.printf(self.score, 776, 312, 180, "left")
 	if self.gm_conditions["level300"] and self.gm_conditions["level500"] and self.gm_conditions["level999"] then
 		love.graphics.printf("GM", 776, 192, 180, "left")
@@ -225,7 +225,7 @@ function MarathonA1Game:drawScoringInfo()
 	love.graphics.rectangle("fill", 501, 600, 6, -math.floor((self.level % 100)*4.8) )
 	love.graphics.setColor(1, 1, 1, 1)
 
-	love.graphics.setFont(font_newBiggerFont)
+	love.graphics.setFont(font_New_Big)
 	love.graphics.printf(formatTime(self.frames), 470, 620, 320, "center")
 
 end

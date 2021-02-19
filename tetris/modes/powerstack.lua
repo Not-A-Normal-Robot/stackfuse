@@ -191,6 +191,16 @@ function Powerstack:onLineClear(cleared_row_count)
 	self.time_limit = new_time_limit
 end
 
+function GameMode:onGameOver()
+	switchBGM(nil)
+	if self.game_over_frames == 1 then
+		playSEOnce("topout")
+		love.audio.stop(sounds.powermode)
+	end
+	love.graphics.draw(misc_graphics["ded"], 0, 0)
+end
+
+
 --[[forced move reset because i can do what i want. eat my ass
 function GLock:whilePieceActive()
 	if not self.piece:isMoveBlocked(self.grid, {x=-1, y=0}) and self.prev_inputs["left"]
@@ -213,12 +223,12 @@ function Powerstack:drawScoringInfo()
 	Powerstack.super.drawScoringInfo(self)
 	love.graphics.setColor(1, 1, 1, 1)
 
-	love.graphics.setFont(font_NEC)
+	love.graphics.setFont(font_New)
 	love.graphics.printf("NEXT", 590, 8, 80, "center")
 	love.graphics.printf("MULTIPLIER", 776, 168, 240, "left")
 	love.graphics.printf("LEVEL", 776, 352, 80, "left")
 
-	love.graphics.setFont(font_NEC_Big)
+	love.graphics.setFont(font_New_Big)
 	love.graphics.printf("x"..string.format("%.3f",(self.multiplier/10)), 776, 200, 240, "left")
 	love.graphics.printf(self.level, 776, 376, 120, "left")
 
@@ -238,7 +248,7 @@ function Powerstack:drawScoringInfo()
 	love.graphics.setColor(1, 1, 1, 1)
 
 
-	love.graphics.setFont(font_newBiggerFont)
+	love.graphics.setFont(font_New_Big)
 	if self.time_limit <= 900 then
 		if (self.frames % 4) == 0 or (self.frames % 4) == 1 then
 			love.graphics.setColor(1, 1, 1, 1)
