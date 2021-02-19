@@ -5,6 +5,8 @@ ModeSelectScene.title = "Game Start"
 current_mode = 1
 current_ruleset = 1
 
+love.audio.stop(sounds.powermode)
+
 function ModeSelectScene:new()
 	self.menu_state = {
 		mode = current_mode,
@@ -33,39 +35,45 @@ function ModeSelectScene:render()
 	love.graphics.draw(
 		backgrounds["game_config"],
 		0, 0, 0,
-		0.5, 0.5
+		1, 1
 	)
 
+	--mode select rectangle
 	if self.menu_state.select == "mode" then
 		love.graphics.setColor(1, 1, 1, 0.5)
 	elseif self.menu_state.select == "ruleset" then
 		love.graphics.setColor(1, 1, 1, 0.25)
 	end
-	love.graphics.rectangle("fill", 20, 258, 240, 22)
-
+	love.graphics.rectangle("fill", 20, 350, 600, 72)
+	--ruleset select rectangle
 	if self.menu_state.select == "mode" then
 		love.graphics.setColor(1, 1, 1, 0.25)
 	elseif self.menu_state.select == "ruleset" then
 		love.graphics.setColor(1, 1, 1, 0.5)
 	end
-	love.graphics.rectangle("fill", 340, 258, 200, 22)
-
+	love.graphics.rectangle("fill", 660, 350, 600, 72)
 	love.graphics.setColor(1, 1, 1, 1)
-
-	love.graphics.draw(misc_graphics["select_mode"], 20, 40)
-
-	love.graphics.setFont(font_3x5_2)
 	for idx, mode in pairs(game_modes) do
 		if(idx >= self.menu_state.mode-9 and idx <= self.menu_state.mode+9) then
-			love.graphics.printf(mode.name, 40, (260 - 20*(self.menu_state.mode)) + 20 * idx, 200, "left")
+			love.graphics.printf(mode.name, 40, (350 - 80*(self.menu_state.mode)) + 80 * idx, 800, "left")
 		end
 	end
 	for idx, ruleset in pairs(rulesets) do
 		if(idx >= self.menu_state.ruleset-9 and idx <= self.menu_state.ruleset+9) then
-			love.graphics.printf(ruleset.name, 360, (260 - 20*(self.menu_state.ruleset)) + 20 * idx, 160, "left")
+			love.graphics.printf(ruleset.name, 680, (350 - 80*(self.menu_state.ruleset)) + 80 * idx, 960, "left")
 		end
 	end
+
+
+	love.graphics.draw(misc_graphics["modeshadow"], 0, 0)
+
+	love.graphics.setFont(font_New_Big)
+	love.graphics.setColor(0, 0, 0, 0.5)
+	love.graphics.printf("Select your mode", 250, 40, 800, "center")
+	love.graphics.setColor(1, 1, 1, 1)
+	love.graphics.printf("Select your mode", 248, 38, 800, "center")
 end
+
 
 function ModeSelectScene:onInputPress(e)
 	if e.input == "menu_decide" or e.scancode == "return" then

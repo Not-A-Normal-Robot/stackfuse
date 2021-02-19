@@ -1,5 +1,5 @@
 local Piece = require 'tetris.components.piece'
-local Ruleset = require 'tetris.rulesets.arika_srs'
+local Ruleset = require 'tetris.rulesets.ti_srs'
 
 local SRS = Ruleset:extend()
 

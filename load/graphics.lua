@@ -104,5 +104,6 @@ misc_graphics = {
 	strike = love.graphics.newImage("res/img/strike.png"),
 	santa = love.graphics.newImage("res/img/strike.png"),
 	ded = love.graphics.newImage("res/img/ded.png"),
-	shadoweffect = love.graphics.newImage("res/img/shadoweffect.png")
+	shadoweffect = love.graphics.newImage("res/img/shadoweffect.png"),
+	modeshadow = love.graphics.newImage("res/img/modeshadow.png"),
 }
