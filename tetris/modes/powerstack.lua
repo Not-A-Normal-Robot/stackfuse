@@ -65,12 +65,12 @@ end
 
 function Powerstack:getDasLimit()
 	local level = self.level
-	if (level < 500) then return 15
-	elseif (level < 800) then return 12
-	elseif (level < 1000) then return 10
-	elseif (level < 1200) then return 8
-	elseif (level < 1300) then return 7
-	elseif (level < 1400) then return 6
+	if (level < 500) then return 12
+	elseif (level < 800) then return 10
+	elseif (level < 1000) then return 8
+	elseif (level < 1200) then return 7
+	elseif (level < 1300) then return 6
+	elseif (level < 1400) then return 5
 	else return 5
 	end
 end
@@ -92,10 +92,10 @@ function Powerstack:getLockDelay()
 	elseif (level < 600) then return 20
 	elseif (level < 700) then return 17
 	elseif (level < 800) then return 14
-	elseif (level < 900) then return 11
-	elseif (level < 1000) then return 10
-	elseif (level < 1100) then return 9
-	elseif (level < 1200) then return 8
+	elseif (level < 900) then return 13
+	elseif (level < 1000) then return 12
+	elseif (level < 1100) then return 11
+	elseif (level < 1200) then return 9
 	elseif (level < 1300) then return 7
 	elseif (level < 1400) then return 6
 	else return 5
