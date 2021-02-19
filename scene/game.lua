@@ -99,8 +99,8 @@ function GameScene:render()
 		love.graphics.printf(self.game.name .. " // " .. self.ruleset.name, 16, 680, 1280, "left")
 	end
 
-	love.graphics.setFont(font_New)
-	if self.paused then love.graphics.print("PAUSED!", 80, 100) end
+	love.graphics.setFont(font_New_Big)
+	if self.paused then love.graphics.printf("PAUSED!", 0, 320, 1272, "center") end
 
 	if self.game.completed then
 		self.game:onGameComplete()

@@ -5,8 +5,6 @@ ModeSelectScene.title = "Game Start"
 current_mode = 1
 current_ruleset = 1
 
-love.audio.stop(sounds.powermode)
-
 function ModeSelectScene:new()
 	self.menu_state = {
 		mode = current_mode,
@@ -55,12 +53,18 @@ function ModeSelectScene:render()
 	love.graphics.setColor(1, 1, 1, 1)
 	for idx, mode in pairs(game_modes) do
 		if(idx >= self.menu_state.mode-9 and idx <= self.menu_state.mode+9) then
-			love.graphics.printf(mode.name, 40, (350 - 80*(self.menu_state.mode)) + 80 * idx, 800, "left")
+			love.graphics.setColor(0, 0, 0, 0.5)
+			love.graphics.printf(mode.name, 40, 350 - (80*(self.menu_state.mode)) + 80 * idx, 800, "left")
+			love.graphics.setColor(1, 1, 1, 1)
+			love.graphics.printf(mode.name, 38, (350 - (80*(self.menu_state.mode)) + 80 * idx) - 2, 800, "left")
 		end
 	end
 	for idx, ruleset in pairs(rulesets) do
 		if(idx >= self.menu_state.ruleset-9 and idx <= self.menu_state.ruleset+9) then
+			love.graphics.setColor(0, 0, 0, 0.5)
 			love.graphics.printf(ruleset.name, 680, (350 - 80*(self.menu_state.ruleset)) + 80 * idx, 960, "left")
+			love.graphics.setColor(1, 1, 1, 1)
+			love.graphics.printf(ruleset.name, 678, ((350 - 80*(self.menu_state.ruleset)) + 80 * idx) - 2, 960, "left")
 		end
 	end
 
@@ -72,6 +76,8 @@ function ModeSelectScene:render()
 	love.graphics.printf("Select your mode", 250, 40, 800, "center")
 	love.graphics.setColor(1, 1, 1, 1)
 	love.graphics.printf("Select your mode", 248, 38, 800, "center")
+
+	love.audio.stop(sounds.powermode) --in case someone quits out of Powerstack with Power Mode active
 end
 
 
