@@ -1,12 +1,12 @@
 ![stackfuse banner](https://media.discordapp.net/attachments/806285072046751780/806547308376227840/stackfuse_logo.png)
 
+[Come join the Discord server for updates on stackfuse.](https://discord.gg/Cr2k2UEvVE)
+
 **stackfuse** is a **work-in-progress** fork of [Cambridge](https://github.com/SashLilac/cambridge), an open-source arcade stacking game. It is not intended to be clean, it is not intended to be built upon, it is not intended to be better than Cambridge. It's intended to be its own thing, with its own game modes and own assets and everything that goes along with that. If you want to actually improve the engine and contribute, please go help out the actual Cambridge project and not this. This fork is mainly a way to strive for creativity, not for improvement.
 
 If you look at the source code, you will want to scream. You will hate it. And you know what? I don't give a damn. The sole reason this exists is to bring my mode concepts to life. There is a chance that if I ever get better at programming, I will revisit these concepts in the future.
 
 This fork likely wouldn't be a reality without the help of the Cambridge discord. While I would normally tell you to go check it out, the server was closed for some undisclosed reason.
-
-No, stackfuse won't have its own official Discord server. Ever. Maintaining a public Discord server is too much effort. Effort I can put into this fork instead.
 
 ## Features and WIP
 * New gamemodes, see further down below
