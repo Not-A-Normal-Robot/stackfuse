@@ -1,5 +1,6 @@
 local ModeSelectScene = Scene:extend()
 
+
 ModeSelectScene.title = "Game Start"
 
 current_mode = 1
@@ -23,10 +24,11 @@ function ModeSelectScene:new()
 		details = "In menus",
 		state = "Choosing a mode",
 	})
+
 end
 
 function ModeSelectScene:update()
-	switchBGM(nil) -- experimental
+	switchBGM(nil)
 end
 
 function ModeSelectScene:render()
@@ -82,7 +84,7 @@ end
 
 
 function ModeSelectScene:onInputPress(e)
-	if e.input == "menu_decide" or e.scancode == "return" then
+	if e.input == "rotate_left" or e.scancode == "return" then
 		current_mode = self.menu_state.mode
 		current_ruleset = self.menu_state.ruleset
 		config.current_mode = current_mode
@@ -98,7 +100,8 @@ function ModeSelectScene:onInputPress(e)
 	elseif e.input == "left" or e.input == "right" or e.scancode == "left" or e.scancode == "right" then
 		self:switchSelect()
 		playSE("cursor_lr")
-	elseif e.input == "menu_back" or e.scancode == "delete" or e.scancode == "backspace" then
+	elseif e.input == "rotate_right" or e.scancode == "delete" or e.scancode == "backspace" or e.scancode == "escape" then
+		playSE("menu_back")
 		scene = TitleScene()
 	elseif e.input then
 		self.secret_inputs[e.input] = true

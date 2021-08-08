@@ -106,4 +106,5 @@ misc_graphics = {
 	ded = love.graphics.newImage("res/img/ded.png"),
 	shadoweffect = love.graphics.newImage("res/img/shadoweffect.png"),
 	modeshadow = love.graphics.newImage("res/img/modeshadow.png"),
+	ded2 = love.graphics.newImage("res/img/ded2.png"),
 }

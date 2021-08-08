@@ -3,10 +3,14 @@ bgm = {
 		gm3 = love.audio.newSource("res/bgm/tgm_credit_roll.mp3", "stream"),
 	},
 	pacer_test = love.audio.newSource("res/bgm/pacer_test.mp3", "stream"),
+	--menu = love.audio.newSource("res/bgm/menu.wav", "stream"),
+	--hard = love.audio.newSource("res/bgm/hard.wav", "stream"),
+	--hyper = love.audio.newSource("res/bgm/hyper.wav", "stream"),
 }
 
 local current_bgm = nil
 local bgm_locked = false
+
 
 function switchBGM(sound, subsound)
 	if bgm_locked then return end
@@ -22,6 +26,14 @@ function switchBGM(sound, subsound)
 	else
 		current_bgm = nil
 	end
+end
+
+function powerBGM()
+	current_bgm:setVolume(config.bgm_volume - (config.bgm_volume / 2))
+end
+
+function noPowerBGM()
+	current_bgm:setVolume(config.bgm_volume)
 end
 
 function switchBGMLoop(sound, subsound)

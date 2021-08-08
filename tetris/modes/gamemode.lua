@@ -103,8 +103,8 @@ function GameMode:initialize(ruleset, secret_inputs)
 	for i = 1, self.next_queue_length do
 		table.insert(self.next_queue, self:getNextPiece(ruleset))
 	end
-	self.lock_on_soft_drop = ({ruleset.softdrop_lock, self.instant_soft_drop, false, true })[config.gamesettings.manlock]
-	self.lock_on_hard_drop = ({ruleset.harddrop_lock, self.instant_hard_drop, true,  false})[config.gamesettings.manlock]
+	self.lock_on_soft_drop = ruleset.softdrop_lock
+	self.lock_on_hard_drop = ruleset.harddrop_lock
 end
 
 function GameMode:update(inputs, ruleset)
@@ -331,7 +331,16 @@ function GameMode:stopDAS()
 end
 
 function GameMode:chargeDAS(inputs)
-	if config["das_last_key"] then
+	if inputs[self.das.direction] == true then
+		self:continueDAS()
+	elseif inputs["right"] == true then
+		self:startRightDAS()
+	elseif inputs["left"] == true then
+		self:startLeftDAS()
+	else
+		self:stopDAS()
+	end
+	--[[if config["das_last_key"] then
 		if inputs["right"] == true and self.das.direction ~= "right" and not self.prev_inputs["right"] then
 			self:startRightDAS()
 		elseif inputs["left"] == true and self.das.direction ~= "left" and not self.prev_inputs["left"] then
@@ -351,7 +360,7 @@ function GameMode:chargeDAS(inputs)
 		else
 			self:stopDAS()
 		end
-	end
+	end]]
 end
 
 function GameMode:areCancel(inputs, ruleset)
@@ -523,7 +532,7 @@ function GameMode:drawGhostPiece(ruleset)
 end
 
 function GameMode:drawNextQueue(ruleset)
-	local colourscheme = ({ruleset.colourscheme, ColourSchemes.Arika, ColourSchemes.TTC})[config.gamesettings.piece_colour]
+	local colourscheme = ruleset.colourscheme
 	function drawPiece(piece, skin, offsets, pos_x, pos_y)
 		for index, offset in pairs(offsets) do
 			local x = offset.x + ruleset.draw_offsets[piece].x + ruleset.spawn_positions[piece].x
@@ -584,7 +593,6 @@ function GameMode:drawScoringInfo()
 	love.graphics.printf(formatTime(self.frames), 65, 420, 160, "center")
 	]]
 end
-
 
 function GameMode:drawSectionTimes(current_section)
 	local section_x = 530

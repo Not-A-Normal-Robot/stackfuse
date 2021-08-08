@@ -49,7 +49,7 @@ Ruleset.pieces = 7
 -- Component functions.
 
 function Ruleset:new()
-	
+
 	if config.gamesettings.piece_colour == 1 then
 		blocks["bone"] = (not self.world) and
 		{
@@ -128,7 +128,7 @@ end
 
 function Ruleset:attemptRotate(new_inputs, piece, grid, initial)
 	local rot_dir = 0
-	
+
 	if (new_inputs["rotate_left"] or new_inputs["rotate_left2"]) then
 		rot_dir = 3
 	elseif (new_inputs["rotate_right"] or new_inputs["rotate_right2"]) then
@@ -230,8 +230,8 @@ function Ruleset:initializePiece(
 	else
 		spawn_positions = self.spawn_positions
 	end
-	local colours = ({self.colourscheme, ColourSchemes.Arika, ColourSchemes.TTC})[config.gamesettings.piece_colour]
-	
+	local colours = self.colourscheme
+
 	local spawn_x
 	if (grid.width ~= 10) then
 		local percent = spawn_positions[data.shape].x / 10
@@ -283,7 +283,7 @@ function Ruleset:processPiece(
 	hard_drop_enabled, additive_gravity
 )
 
-	local synchroes_allowed = ({not self.world, true, false})[config.gamesettings.synchroes_allowed]
+	local synchroes_allowed = not self.world, true, false
 
 	if synchroes_allowed then
 		self:rotatePiece(inputs, piece, grid, prev_inputs, false)

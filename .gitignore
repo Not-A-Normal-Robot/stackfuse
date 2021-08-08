@@ -2,6 +2,8 @@
 *.love
 dist/*.zip
 dist/**/cambridge.exe
+dist/**/stackfuse.exe
 dist/**/libs
 dist/**/*.md
 *.psd
+*.xcf

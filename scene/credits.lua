@@ -54,10 +54,12 @@ function CreditsScene:render()
 end
 
 function CreditsScene:onInputPress(e)
-    if e.input == "menu_decide" or e.scancode == "return" or
-       e.input == "menu_back" or e.scancode == "delete" or e.scancode == "backspace" then
-        scene = TitleScene()
+    if e.input == "rotate_left" or e.scancode == "return" or
+       e.input == "rotate_right" or e.scancode == "delete" or e.scancode == "backspace" or e.scancode == "escape" then
+        playSE("menu_back")
         switchBGM(nil)
+        scene = TitleScene()
+
 	end
 end
 

@@ -7,6 +7,7 @@ function love.load()
 	require "load.sounds"
 	require "load.bgm"
 	require "load.save"
+	require "load.version"
 	loadSave()
 	require "scene"
 	--config["side_next"] = false

@@ -4,7 +4,7 @@ local GameMode = require 'tetris.modes.gamemode'
 local Piece = require 'tetris.components.piece'
 local Grid = require 'tetris.components.grid'
 
-local History4RollsRandomizer = require 'tetris.randomizers.history_4rolls'
+local Bag7Randomizer = require 'tetris.randomizers.bag7'
 
 local Powerstack = GameMode:extend()
 
@@ -22,7 +22,7 @@ function Powerstack:new()
 	self.multiplier = 10
 	self.drain = 0.0002
 	self.time_limit = 5400
-	self.randomizer = History4RollsRandomizer()
+	self.randomizer = Bag7Randomizer()
 	self.powermode = false
 	self.lol = 0
 
@@ -116,6 +116,9 @@ end
 function Powerstack:advanceOneFrame()
 	if self.ready_frames == 0 then
 		self.frames = self.frames + 1
+		if self.frames == 1 then
+			--switchBGMLoop("hyper")
+		end
 		if self.multiplier >= 40 then
 			self.powermode = true
 		else
@@ -124,9 +127,11 @@ function Powerstack:advanceOneFrame()
 		if self.powermode then
 		self.multiplier = (math.min (math.max(2, self.multiplier - (self.drain*4)), 50))
 		playSEOnce("powermode")
+		--powerBGM()
 		else
 		self.multiplier = (math.min (math.max(2, self.multiplier - self.drain), 50))
 		love.audio.stop(sounds.powermode)
+	    --noPowerBGM()
 		end
 		self.time_limit = math.max(self.time_limit - 1, 0)
         if self.time_limit <= 0 and self.piece == nil then
@@ -172,7 +177,7 @@ end
 
 local cleared_row_levels = {1, 2, 4, 6}
 local cleared_row_levels_power = {2, 4, 8, 12}
-local multiplieradder = {0, 2, 6, 16}
+local multiplieradder = {1, 4, 8, 16}
 local timeadder = {0.1, 0.5, 1, 2}
 
 function Powerstack:onLineClear(cleared_row_count)
@@ -191,7 +196,7 @@ function Powerstack:onLineClear(cleared_row_count)
 	self.time_limit = new_time_limit
 end
 
-function GameMode:onGameOver()
+function Powerstack:onGameOver()
 	switchBGM(nil)
 	if self.game_over_frames == 1 then
 		playSEOnce("topout")

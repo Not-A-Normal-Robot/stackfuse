@@ -12,7 +12,7 @@ sounds = {
 	bottom = love.audio.newSource("res/se/bottom.wav", "static"),
 	cursor = love.audio.newSource("res/se/cursor.wav", "static"),
 	cursor_lr = love.audio.newSource("res/se/cursor_lr.wav", "static"),
-	main_decide = love.audio.newSource("res/se/main_decide.wav", "static"),
+	main_decide = love.audio.newSource("res/se/ihs.wav", "static"),
 	mode_decide = love.audio.newSource("res/se/mode_decide.wav", "static"),
 	lock = love.audio.newSource("res/se/lock.wav", "static"),
 	hold = love.audio.newSource("res/se/hold.wav", "static"),
@@ -30,8 +30,11 @@ sounds = {
 	powermode = love.audio.newSource("res/se/powermode.wav", "static"),
 	danger = love.audio.newSource("res/se/danger.wav", "static"),
 	garbage = love.audio.newSource("res/se/garbage.wav", "static"),
-	powererase = love.audio.newSource("res/se/powererase.wav", "static")
-
+	powererase = love.audio.newSource("res/se/powererase.wav", "static"),
+	finalerase = love.audio.newSource("res/se/finalerase.wav", "static"),
+	wrongerase = love.audio.newSource("res/se/wrongerase.wav", "static"),
+	input = love.audio.newSource("res/se/input.wav", "static"),
+	menu_back = love.audio.newSource("res/se/menu_back.wav", "static"),
 
 }
 

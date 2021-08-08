@@ -86,18 +86,20 @@ function GameScene:render()
 
 	-- ready/go graphics
 
-	if self.game.ready_frames <= 100 and self.game.ready_frames > 52 then
-		love.graphics.draw(misc_graphics["ready"], 144 - 50, 240 - 14)
-	elseif self.game.ready_frames <= 50 and self.game.ready_frames > 2 then
-		love.graphics.draw(misc_graphics["go"], 144 - 27, 240 - 14)
-	end
-
 	self.game:drawCustom()
-	love.graphics.setColor(1, 1, 1, 1)
-	love.graphics.setFont(font_New)
-	if config.gamesettings.display_gamemode == 1 then
-		love.graphics.printf(self.game.name .. " // " .. self.ruleset.name, 16, 680, 1280, "left")
+	love.graphics.setColor(1, 1, 1, 1) --fallback color just in case
+	love.graphics.setFont(font_New_Big)
+	if self.game.ready_frames <= 100 and self.game.ready_frames > 52 then
+		love.graphics.setColor(1, (5 / ((self.game.ready_frames) - 52)) , 0, 1)
+		love.graphics.printf("READY...", 0, 320, 1272, "center")
+	elseif self.game.ready_frames <= 50 and self.game.ready_frames > 2 then
+		love.graphics.setColor(((self.game.ready_frames) / 50), 1, 0, 1)
+		love.graphics.printf("GO!", 0, 320, 1272, "center")
 	end
+	love.graphics.setFont(font_New)
+	love.graphics.setColor(1, 1, 1, 1)
+	love.graphics.printf(self.game.name .. " // " .. self.ruleset.name, 16, 680, 1280, "left")
+	love.graphics.printf("stackfuse // " .. getVersionNumber(), -16, 680, 1280, "right")
 
 	love.graphics.setFont(font_New_Big)
 	if self.paused then love.graphics.printf("PAUSED!", 0, 320, 1272, "center") end
@@ -110,27 +112,32 @@ function GameScene:render()
 end
 
 function GameScene:onInputPress(e)
-	if self.game.completed and (e.input == "menu_decide" or e.input == "menu_back" or e.input == "retry") then
+	if self.game.completed and (e.input == "rotate_left" or e.input == "menu_back" or e.input == "retry" or e.input == "rotate_right") then
 		highscore_entry = self.game:getHighscoreData()
 		highscore_hash = self.game.hash .. "-" .. self.ruleset.hash
 		submitHighscore(highscore_hash, highscore_entry)
 		scene = e.input == "retry" and GameScene(self.retry_mode, self.retry_ruleset, self.secret_inputs) or ModeSelectScene()
+		playSE("menu_back")
 	elseif e.input == "retry" then
 		switchBGM(nil)
+		love.audio.stop(sounds.powermode)
 		scene = GameScene(self.retry_mode, self.retry_ruleset, self.secret_inputs)
 	elseif e.input == "pause" and not (self.game.game_over or self.game.completed) then
 		self.paused = not self.paused
-		if self.paused then pauseBGM()
+		if self.paused then
+			pauseBGM()
+			love.audio.stop(sounds.powermode)
 		else resumeBGM() end
-	elseif e.input == "menu_back" then
+	elseif e.scancode == "escape" then
 		scene = ModeSelectScene()
-	elseif e.input and string.sub(e.input, 1, 5) ~= "menu_" then
+		playSE("menu_back")
+	elseif e.input and string.sub(e.input, 1, 5) ~= "rotate_" then
 		self.inputs[e.input] = true
 	end
 end
 
 function GameScene:onInputRelease(e)
-	if e.input and string.sub(e.input, 1, 5) ~= "menu_" then
+	if e.input and string.sub(e.input, 1, 5) ~= "rotate_" then
 		self.inputs[e.input] = false
 	end
 end

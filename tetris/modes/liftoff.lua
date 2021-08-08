@@ -4,7 +4,7 @@ local GameMode = require 'tetris.modes.gamemode'
 local Piece = require 'tetris.components.piece'
 local Grid = require 'tetris.components.grid'
 
-local History4RollsRandomizer = require 'tetris.randomizers.history_4rolls'
+local Bag7Randomizer = require 'tetris.randomizers.bag7'
 
 local Liftoff = GameMode:extend()
 
@@ -20,7 +20,7 @@ function Liftoff:new()
 	self.roll_frames = 0
 	self.combo = 1
 	self.bravos = 0
-	self.randomizer = History4RollsRandomizer()
+	self.randomizer = Bag7Randomizer()
 	self.piecelimit = 0
 
 	self.lock_drop = false
@@ -150,6 +150,9 @@ function Liftoff:advanceOneFrame()
 	elseif self.ready_frames == 0 then
 		self.frames = self.frames + 1
 	end
+	if self.frames == 1 then
+		--switchBGMLoop("hyper")
+	end
 	if self.level >= 2 and self.sectioncheck == 0 or
 	self.level >= 3 and self.sectioncheck == 1 or
 	self.level >= 4 and self.sectioncheck == 2 or
@@ -248,23 +251,29 @@ function Liftoff:drawScoringInfo()
 
 
 	love.graphics.setFont(font_New_Big)
-	if (self.frames % 4) == 0 or (self.frames % 4) == 1 then
-		love.graphics.setColor(1, 1, 1, 1)
+	if self.level >=25 then
+		if (self.frames % 4) == 0 or (self.frames % 4) == 1 then
+			love.graphics.setColor(1, 1, 1, 1)
+		else
+			love.graphics.setColor(1, 1, 0.4, 1)
+		end
 	else
-		love.graphics.setColor(1, 1, 0.4, 1)
+		love.graphics.setColor(1, 1, 1, 1)
 	end
 	love.graphics.printf(formatTime(self.frames), 470, 620, 320, "center")
 
 end
 
 function Liftoff:getBackground()
-	return math.floor(self.level / 100)
+	return math.floor(self.level / 5)
 end
 
 function Liftoff:getHighscoreData()
 	return {
+		score = self.score,
 		level = self.level,
 		frames = self.frames,
+		lines = self.lines,
 	}
 end
 
