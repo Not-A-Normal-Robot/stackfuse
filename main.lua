@@ -44,27 +44,18 @@ function love.load()
 		scene = TitleScene()
 	end
 
-	game_modes = {}
-	mode_list = love.filesystem.getDirectoryItems("tetris/modes")
-	for i=1,#mode_list do
-		if(mode_list[i] ~= "gamemode.lua" and mode_list[i] ~= "unrefactored_modes") then
-			game_modes[#game_modes+1] = require ("tetris.modes."..string.sub(mode_list[i],1,-5))
-		end
-	end
-	rulesets = {}
-	rule_list = love.filesystem.getDirectoryItems("tetris/rulesets")
-	for i=1,#rule_list do
-		if(rule_list[i] ~= "ruleset.lua" and rule_list[i] ~= "unrefactored_rulesets") then
-			rulesets[#rulesets+1] = require ("tetris.rulesets."..string.sub(rule_list[i],1,-5))
-		end
-	end
-	--sort mode/rule lists
-	local function padnum(d) return ("%03d%s"):format(#d, d) end
-	table.sort(game_modes, function(a,b)
-	return tostring(a.name):gsub("%d+",padnum) < tostring(b.name):gsub("%d+",padnum) end)
-	table.sort(rulesets, function(a,b)
-	return tostring(a.name):gsub("%d+",padnum) < tostring(b.name):gsub("%d+",padnum) end)
-
+	game_modes = {
+		require 'tetris.modes.hypertapmaster',
+		require 'tetris.modes.liftoff',
+		require 'tetris.modes.powerstack',
+		require 'tetris.modes.prism',
+	}
+	rulesets = {
+		require 'tetris.rulesets.arika',
+		require 'tetris.rulesets.arika_ti',
+		require 'tetris.rulesets.ti_srs',
+		require 'tetris.rulesets.standard_exp',
+	}
 end
 
 local TARGET_FPS = 60
