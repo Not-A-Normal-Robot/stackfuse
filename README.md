@@ -1,12 +1,12 @@
 ![stackfuse banner](https://media.discordapp.net/attachments/806285072046751780/806547308376227840/stackfuse_logo.png)
 
+[Come join the Discord server for updates on stackfuse.](https://discord.gg/Cr2k2UEvVE)
+
 **stackfuse** is a **work-in-progress** fork of [Cambridge](https://github.com/SashLilac/cambridge), an open-source arcade stacking game. It is not intended to be clean, it is not intended to be built upon, it is not intended to be better than Cambridge. It's intended to be its own thing, with its own game modes and own assets and everything that goes along with that. If you want to actually improve the engine and contribute, please go help out the actual Cambridge project and not this. This fork is mainly a way to strive for creativity, not for improvement.
 
 If you look at the source code, you will want to scream. You will hate it. And you know what? I don't give a damn. The sole reason this exists is to bring my mode concepts to life. There is a chance that if I ever get better at programming, I will revisit these concepts in the future.
 
 This fork likely wouldn't be a reality without the help of the Cambridge discord. While I would normally tell you to go check it out, the server was closed for some undisclosed reason.
-
-No, stackfuse won't have its own official Discord server. Ever. Maintaining a public Discord server is too much effort. Effort I can put into this fork instead.
 
 ## Features and WIP
 * New gamemodes, see further down below
@@ -26,6 +26,9 @@ No, stackfuse won't have its own official Discord server. Ever. Maintaining a pu
 * Protolock: The version of G-Lock that I never really bothered finishing. No "strike system", fluctuating speeds, ends at 500 pieces.
 * Clockwork: Time is ticking. A survival mode with no win condition, the only goal is to survive for as long as possible. The ticking increases over time, and such, your placement limits will decrease, leading to eventual topout.
 * Loop: Has a loop system. After 50 Lines you earn one Loop, you roll back in levels but timings shorten. Constant 1G after 1 loop, constant 2G after 3 loops. At 5 loops, you have reached the fastest speeds. Reach 400 lines for a surprise.
+* Prism: You have to follow a pattern of how many lines to clear at once. The pattern is 1, 2, 3, 4, 3, 2 and then repeats. Any wrong line clear will give you garbage below the screen and the more mistakes you make, the more garbage will come up. Has a relatively relaxed speed curve, with a win condition of doing the pattern 10 times in a row. Might randomize piece colors, not sure yet.
+* Demon Fuel: Inspired by a game called Devil Daggers. Survive for as long as you can (in seconds) with different gimmicks coming in at certain points. Will include "bombs" to wipe the field.
+* Boss battles: They will probably be called differently, but basically, you "fight bosses" by depleting their HP with combos and tetrises. Bosses have multiple phases and different attack patterns by utilizing item-like effects on your board. As for what attacks exactly these bosses will have, who knows... I know I don't. Not yet, anyways. lmao
 
 ## Playing the game
 
