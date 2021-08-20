@@ -8,14 +8,14 @@ require 'libs.simple-slider'
 ConfigScene.options = {
 	-- this serves as reference to what the options' values mean i guess?
 	-- Format: {name in config, displayed name, uses slider?, options OR slider name}
-	{"manlock", "Manual Locking", false, {"Per ruleset", "Per gamemode", "Harddrop", "Softdrop"}},
-	{"piece_colour", "Piece Colours", false, {"Per ruleset", "Arika", "TTC"}},
+	--{"manlock", "Manual Locking", false, {"Per ruleset", "Per gamemode", "Harddrop", "Softdrop"}},
+	-- {"piece_colour", "Piece Colours", false, {"Per ruleset", "Arika", "TTC"}},
 	{"world_reverse", "A Button Rotation", false, {"Left", "Auto", "Right"}},
-	{"spawn_positions", "Spawn Positions", false, {"Per ruleset", "In field", "Out of field"}},
-	{"display_gamemode", "Display Gamemode", false, {"On", "Off"}},
-	{"das_last_key", "DAS Last Key", false, {"Off", "On"}},
-	{"smooth_movement", "Smooth Piece Drop", false, {"On", "Off"}},
-	{"synchroes_allowed", "Synchroes", false, {"Per ruleset", "On", "Off"}},
+	-- {"spawn_positions", "Spawn Positions", false, {"Per ruleset", "In field", "Out of field"}},
+	-- {"display_gamemode", "Display Gamemode", false, {"On", "Off"}},
+	-- {"das_last_key", "DAS Last Key", false, {"Off", "On"}},
+	-- {"smooth_movement", "Smooth Piece Drop", false, {"On", "Off"}},
+	-- {"synchroes_allowed", "Synchroes", false, {"Per ruleset", "On", "Off"}},
 	{"diagonal_input", "Diagonal Input", false, {"On", "Off"}},
 	{"buffer_lock", "Buffer Drop Type", false, {"Off", "Hold", "Tap"}},
 	{"sfx_volume", "SFX", true, "sfxSlider"},
@@ -27,14 +27,14 @@ function ConfigScene:new()
 	-- load current config
 	self.config = config.input
 	self.highlight = 1
-	
+
 	DiscordRPC:update({
 		details = "In menus",
 		state = "Changing game settings",
 	})
 
-	self.sfxSlider = newSlider(165, 400, 225, config.sfx_volume * 100, 0, 100, function(v) config.sfx_volume = v / 100 end, {width=20, knob="circle", track="roundrect"})
-	self.bgmSlider = newSlider(465, 400, 225, config.bgm_volume * 100, 0, 100, function(v) config.bgm_volume = v / 100 end, {width=20, knob="circle", track="roundrect"})
+	self.sfxSlider = newSlider(640, 500, 600, config.sfx_volume * 100, 0, 100, function(v) config.sfx_volume = v / 100 end, {width=40, knob="circle", track="roundrect"})
+	self.bgmSlider = newSlider(640, 660, 600, config.bgm_volume * 100, 0, 100, function(v) config.bgm_volume = v / 100 end, {width=40, knob="circle", track="roundrect"})
 end
 
 function ConfigScene:update()
@@ -45,38 +45,59 @@ end
 function ConfigScene:render()
 	love.graphics.setColor(1, 1, 1, 1)
 	love.graphics.draw(
-		backgrounds["game_config"],
+		backgrounds["input_config"],
 		0, 0, 0,
-		0.5, 0.5
+		1, 1
 	)
 
-	love.graphics.setFont(font_3x5_4)
-	love.graphics.print("GAME SETTINGS", 80, 40)
-	
+	love.graphics.setFont(font_New_Big)
+	love.graphics.setColor(0, 0, 0, 0.5)
+	love.graphics.printf("Game Settings", 2, 42, 1280, "center")
+	love.graphics.setColor(1, 1, 1, 1)
+	love.graphics.printf("Game Settings", 0, 40, 1280, "center")
+
 	--Lazy check to see if we're on the SFX or BGM slider. Probably will need to be rewritten if more options get added.
 	love.graphics.setColor(1, 1, 1, 0.5)
 	if not ConfigScene.options[self.highlight][3] then
-		love.graphics.rectangle("fill", 25, 98 + self.highlight * 20, 170, 22)
+		love.graphics.rectangle("fill", 20, 40 + 80 * self.highlight, 1240, 70)
 	else
-		love.graphics.rectangle("fill", 65 + (1+self.highlight-#self.options) * 300, 342, 215, 33)
+		love.graphics.rectangle("fill", 370, 240 + 160 * (self.highlight - 3), 540, 70)
 	end
-	
-	love.graphics.setFont(font_3x5_2)
+
+	love.graphics.setFont(font_New_Big)
 	for i, option in ipairs(ConfigScene.options) do
 		if not option[3] then
-			love.graphics.setColor(1, 1, 1, 1)
-			love.graphics.printf(option[2], 40, 100 + i * 20, 150, "left")
+			love.graphics.setColor(0, 0, 0, 0.5)
+			love.graphics.printf(option[2], 42, 42 + i * 80, 1280, "left")
 			for j, setting in ipairs(option[4]) do
-				love.graphics.setColor(1, 1, 1, config.gamesettings[option[1]] == j and 1 or 0.5)
-				love.graphics.printf(setting, 100 + 110 * j, 100 + i * 20, 100, "center")
+				--love.graphics.setColor(1, 1, 1, config.gamesettings[option[1]] == j and 1 or 0.5)
+				--love.graphics.setColor(config.gamesettings[option[1]] == j and 1 or 0.8, config.gamesettings[option[1]] == j and 1 or 0.8, config.gamesettings[option[1]] == j and 1 or 0.8, 0.5)
+				love.graphics.printf(setting, 602 + 160 * j, 42 + i * 80, 1280, "left")
 			end
 		end
 	end
 
+	love.graphics.setFont(font_New_Big)
+	for i, option in ipairs(ConfigScene.options) do
+		if not option[3] then
+			love.graphics.setColor(1, 1, 1, 1)
+			love.graphics.printf(option[2], 40, 40 + i * 80, 1280, "left")
+			for j, setting in ipairs(option[4]) do
+				--love.graphics.setColor(1, 1, 1, config.gamesettings[option[1]] == j and 1 or 0.5)
+				love.graphics.setColor(config.gamesettings[option[1]] == j and 1 or 0.8, config.gamesettings[option[1]] == j and 1 or 0.8, config.gamesettings[option[1]] == j and 1 or 0.8, 1)
+				love.graphics.printf(setting, 600 + 160 * j, 40 + i * 80, 1280, "left")
+			end
+		end
+	end
+
+	love.graphics.setColor(0, 0, 0, 0.5)
+	love.graphics.setFont(font_New_Big)
+	love.graphics.printf("SFX Volume: " .. math.floor(self.sfxSlider:getValue()) .. "%", 2, 402, 1280, "center")
+	love.graphics.printf("BGM Volume: " .. math.floor(self.bgmSlider:getValue()) .. "%", 2, 562, 1280, "center")
+
 	love.graphics.setColor(1, 1, 1, 1)
-	love.graphics.setFont(font_3x5_3)
-	love.graphics.print("SFX Volume: " .. math.floor(self.sfxSlider:getValue()) .. "%", 75, 345)
-	love.graphics.print("BGM Volume: " .. math.floor(self.bgmSlider:getValue()) .. "%", 375, 345)
+	love.graphics.printf("SFX Volume: " .. math.floor(self.sfxSlider:getValue()) .. "%", 0, 400, 1280, "center")
+	love.graphics.printf("BGM Volume: " .. math.floor(self.bgmSlider:getValue()) .. "%", 0, 560, 1280, "center")
 
 	love.graphics.setColor(1, 1, 1, 0.75)
 	self.sfxSlider:draw()
@@ -84,7 +105,7 @@ function ConfigScene:render()
 end
 
 function ConfigScene:onInputPress(e)
-	if e.input == "menu_decide" or e.scancode == "return" then
+	if e.input == "rotate_left" or e.scancode == "return" then
 		playSE("mode_decide")
 		saveConfig()
 		scene = SettingsScene()
@@ -116,7 +137,8 @@ function ConfigScene:onInputPress(e)
 			sld:update()
 			playSE("cursor")
 		end
-	elseif e.input == "menu_back" or e.scancode == "delete" or e.scancode == "backspace" then
+	elseif e.input == "rotate_right" or e.scancode == "delete" or e.scancode == "backspace" or e.scancode == "escape" then
+		playSE("menu_back")
 		loadSave()
 		scene = SettingsScene()
 	end

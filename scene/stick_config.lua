@@ -91,7 +91,7 @@ function StickConfigScene:render()
 	if self.input_state > table.getn(configurable_inputs) then
 		love.graphics.printf("Inputs OK? Press return to confirm, delete/backspace to retry " .. (config.input and "or escape to cancel." or ""), 2, 642, 1280, "center")
 	else
-		love.graphics.printf("Press the key for " .. configurable_inputs[self.input_state] .. ", press tab to skip or" .. (config.input and " escape to cancel." or ""), 2, 642, 1280, "center")
+		love.graphics.printf("Push lever or button for " .. configurable_inputs[self.input_state] .. ", press tab to skip or" .. (config.input and " escape to cancel." or ""), 2, 642, 1280, "center")
 		love.graphics.printf("The function keys (F1, F2, etc.), escape and tab keys can't be changed.", 2, 682, 1280, "center")
 	end
 
@@ -115,7 +115,7 @@ function StickConfigScene:render()
 	if self.input_state > table.getn(configurable_inputs) then
 		love.graphics.printf("Inputs OK? Press return to confirm, delete/backspace to retry " .. (config.input and "or escape to cancel." or ""), 0, 640, 1280, "center")
 	else
-		love.graphics.printf("Press the key for " .. configurable_inputs[self.input_state] .. ", press tab to skip or" .. (config.input and " escape to cancel." or ""), 0, 640, 1280, "center")
+		love.graphics.printf("Push lever or button for " .. configurable_inputs[self.input_state] .. ", press tab to skip or" .. (config.input and " escape to cancel." or ""), 0, 640, 1280, "center")
 		love.graphics.printf("The function keys (F1, F2, etc.), escape and tab keys can't be changed.", 0, 680, 1280, "center")
 	end
 

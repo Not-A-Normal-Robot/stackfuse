@@ -81,7 +81,7 @@ end
 
 function Ruleset:attemptRotate(new_inputs, piece, grid, initial)
 	local rot_dir = 0
-	
+
 	if (new_inputs["rotate_left"] or new_inputs["rotate_left2"]) then
 		rot_dir = 3
 	elseif (new_inputs["rotate_right"] or new_inputs["rotate_right2"]) then
@@ -207,13 +207,8 @@ function Ruleset:initializePiece(
 		spawn_positions = self.spawn_positions
 	end
 
-	local colours
-	if self.pieces == 7 then
-		colours = ({self.colourscheme, ColourSchemes.Arika, ColourSchemes.TTC})[config.gamesettings.piece_colour]
-	else
-		colours = self.colourscheme
-	end
-	
+	local colours = self.colourscheme
+
 	local spawn_x = math.floor(spawn_positions[data.shape].x * grid.width / 10)
 
 	local spawn_dy

@@ -34,6 +34,7 @@ function love.load()
 end
 
 function initModules()
+	--[[
 	game_modes = {}
 	mode_list = love.filesystem.getDirectoryItems("tetris/modes")
 	for i=1,#mode_list do
@@ -54,6 +55,20 @@ function initModules()
 	return tostring(a.name):gsub("%d+",padnum) < tostring(b.name):gsub("%d+",padnum) end)
 	table.sort(rulesets, function(a,b)
 	return tostring(a.name):gsub("%d+",padnum) < tostring(b.name):gsub("%d+",padnum) end)
+	]]
+	game_modes = {
+		require 'tetris.modes.liftoff',
+		require 'tetris.modes.prism',
+		require 'tetris.modes.powerstack',
+		require 'tetris.modes.g-lock',
+	}
+	rulesets = {
+		require 'tetris.rulesets.arika',
+		require 'tetris.rulesets.arika_ti',
+		require 'tetris.rulesets.fars',
+		require 'tetris.rulesets.standard_exp',
+		require 'tetris.rulesets.ti_srs',
+	}
 end
 
 function love.draw()

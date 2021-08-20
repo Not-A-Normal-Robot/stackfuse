@@ -112,8 +112,8 @@ function GameMode:initialize(ruleset)
 	for i = 1, math.max(self.next_queue_length, 1) do
 		table.insert(self.next_queue, self:getNextPiece(ruleset))
 	end
-	self.lock_on_soft_drop = ({ruleset.softdrop_lock, self.instant_soft_drop, false, true })[config.gamesettings.manlock]
-	self.lock_on_hard_drop = ({ruleset.harddrop_lock, self.instant_hard_drop, true,  false})[config.gamesettings.manlock]
+	self.lock_on_soft_drop = ruleset.softdrop_lock
+	self.lock_on_hard_drop = ruleset.harddrop_lock
 end
 
 function GameMode:update(inputs, ruleset)
@@ -398,7 +398,7 @@ function GameMode:stopDAS()
 end
 
 function GameMode:chargeDAS(inputs)
-	if config.gamesettings.das_last_key == 2 then
+	--[[if config.gamesettings.das_last_key == 2 then
 		if inputs["right"] == true and self.das.direction ~= "right" and not self.prev_inputs["right"] then
 			self:startRightDAS()
 		elseif inputs["left"] == true and self.das.direction ~= "left" and not self.prev_inputs["left"] then
@@ -418,6 +418,16 @@ function GameMode:chargeDAS(inputs)
 		else
 			self:stopDAS()
 		end
+	end
+	]]
+	if inputs[self.das.direction] == true then
+		self:continueDAS()
+	elseif inputs["right"] == true then
+		self:startRightDAS()
+	elseif inputs["left"] == true then
+		self:startLeftDAS()
+	else
+		self:stopDAS()
 	end
 end
 
@@ -705,12 +715,7 @@ function GameMode:drawGhostPiece(ruleset)
 end
 
 function GameMode:drawNextQueue(ruleset)
-	local colourscheme
-	if ruleset.pieces == 7 then
-		colourscheme = ({ruleset.colourscheme, ColourSchemes.Arika, ColourSchemes.TTC})[config.gamesettings.piece_colour]
-	else
-		colourscheme = ruleset.colourscheme
-	end
+	local colourscheme = ruleset.colourscheme
 	function drawPiece(piece, skin, offsets, pos_x, pos_y)
 		for index, offset in pairs(offsets) do
 			local x = offset.x + ruleset:getDrawOffset(piece, rotation).x + ruleset.spawn_positions[piece].x
@@ -760,6 +765,8 @@ function GameMode:drawGrid()
 end
 
 function GameMode:drawScoringInfo()
+	--[[ fallback shit
+
 	love.graphics.setColor(1, 1, 1, 1)
 	love.graphics.setFont(font_3x5_2)
 
@@ -778,6 +785,8 @@ function GameMode:drawScoringInfo()
 
 	love.graphics.setFont(font_8x11)
 	love.graphics.printf(formatTime(self.frames), 64, 420, 160, "center")
+
+	]]
 end
 
 function GameMode:drawSectionTimes(current_section)
