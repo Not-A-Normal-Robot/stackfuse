@@ -22,23 +22,34 @@ function ConfigScene:render()
     love.graphics.draw(
 		backgrounds["input_config"],
 		0, 0, 0,
-		0.5, 0.5
+		1, 1
     )
 
-    love.graphics.setFont(font_3x5_4)
-    love.graphics.print("INPUT CONFIG", 80, 40)
+    love.graphics.setFont(font_New_Big)
+    love.graphics.setColor(0, 0, 0, 0.5)
+    love.graphics.printf("Input Config", 362, 42, 560, "center")
+    love.graphics.setFont(font_New)
+    love.graphics.printf("Which controls do you want to configure?", 362, 122, 560, "center")
 
-    love.graphics.setFont(font_3x5_2)
-    love.graphics.print("Which controls do you want to configure?", 80, 90)
+    love.graphics.setFont(font_New_Big)
+    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.printf("Input Config", 360, 40, 560, "center")
+    love.graphics.setFont(font_New)
+    love.graphics.printf("Which controls do you want to configure?", 360, 120, 560, "center")
 
     love.graphics.setColor(1, 1, 1, 0.5)
-	love.graphics.rectangle("fill", 75, 118 + 50 * self.menu_state, 200, 33)
+    love.graphics.rectangle("fill", 410, 278 + 80 * self.menu_state, 460, 70)
 
-    love.graphics.setFont(font_3x5_3)
+    love.graphics.setFont(font_New_Big)
+    love.graphics.setColor(0, 0, 0, 0.5)
+	for i, screen in pairs(menu_screens) do
+		love.graphics.printf(screen.title, 362, 282 + 80 * i, 560, "center")
+	end
+    --and then the main text.
 	love.graphics.setColor(1, 1, 1, 1)
 	for i, screen in pairs(menu_screens) do
-		love.graphics.printf(screen.title, 80, 120 + 50 * i, 200, "left")
-    end
+		love.graphics.printf(screen.title, 360, 280 + 80 * i, 560, "center")
+	end
 end
 
 function ConfigScene:changeOption(rel)
@@ -47,8 +58,8 @@ function ConfigScene:changeOption(rel)
 end
 
 function ConfigScene:onInputPress(e)
-	if e.input == "menu_decide" or e.scancode == "return" then
-		playSE("main_decide")
+	if e.input == "rotate_left" or e.scancode == "return" then
+		playSE("ihs")
 		scene = menu_screens[self.menu_state]()
 	elseif e.input == "up" or e.scancode == "up" then
 		self:changeOption(-1)
@@ -57,8 +68,9 @@ function ConfigScene:onInputPress(e)
 		self:changeOption(1)
 		playSE("cursor")
 	elseif config.input and (
-		e.input == "menu_back" or e.scancode == "backspace" or e.scancode == "delete"
+		e.input == "rotate_right" or e.scancode == "backspace" or e.scancode == "delete" or e.scancode == "escape"
 	) then
+        playSE("menu_back")
 		scene = SettingsScene()
 	end
 end

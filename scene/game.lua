@@ -49,9 +49,11 @@ function GameScene:onInputPress(e)
 	if (
 		self.game.game_over or self.game.completed
 	) and (
-		e.input == "menu_decide" or
-		e.input == "menu_back" or
-		e.input == "retry"
+		e.input == "rotate_left" or
+		e.input == "rotate_right" or
+		e.input == "retry" or
+		e.input == "exitmode" or
+		e.scancode == "escape"
 	) then
 		highscore_entry = self.game:getHighscoreData()
 		highscore_hash = self.game.hash .. "-" .. self.ruleset.hash
@@ -66,8 +68,9 @@ function GameScene:onInputPress(e)
 		self.paused = not self.paused
 		if self.paused then pauseBGM()
 		else resumeBGM() end
-	elseif e.input == "menu_back" then
+	elseif e.input == "menu_back" or e.input == "exitmode" then
 		self.game:onExit()
+		playSE("menu_back")
 		scene = ModeSelectScene()
 	elseif e.input and string.sub(e.input, 1, 5) ~= "menu_" then
 		self.inputs[e.input] = true

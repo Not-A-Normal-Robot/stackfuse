@@ -31,9 +31,9 @@ end
 
 function ModeSelectScene:render()
 	love.graphics.draw(
-		backgrounds[0],
+		backgrounds["game_config"],
 		0, 0, 0,
-		0.5, 0.5
+		1, 1
 	)
 
 	if self.menu_state.select == "mode" then
@@ -41,39 +41,53 @@ function ModeSelectScene:render()
 	elseif self.menu_state.select == "ruleset" then
 		love.graphics.setColor(1, 1, 1, 0.25)
 	end
-	love.graphics.rectangle("fill", 20, 258, 240, 22)
+	love.graphics.rectangle("fill", 20, 358, 600, 72)
 
 	if self.menu_state.select == "mode" then
 		love.graphics.setColor(1, 1, 1, 0.25)
 	elseif self.menu_state.select == "ruleset" then
 		love.graphics.setColor(1, 1, 1, 0.5)
 	end
-	love.graphics.rectangle("fill", 340, 258, 200, 22)
+	love.graphics.rectangle("fill", 660, 358, 600, 72)
 
 	love.graphics.setColor(1, 1, 1, 1)
 
-	love.graphics.draw(misc_graphics["select_mode"], 20, 40)
-
-	love.graphics.setFont(font_3x5_2)
+	love.graphics.setFont(font_New_Big)
 	for idx, mode in pairs(game_modes) do
 		if(idx >= self.menu_state.mode-9 and idx <= self.menu_state.mode+9) then
-			love.graphics.printf(mode.name, 40, (260 - 20*(self.menu_state.mode)) + 20 * idx, 200, "left")
+			love.graphics.setColor(0, 0, 0, 0.5)
+			love.graphics.printf(mode.name, 40, 360 - (80*(self.menu_state.mode)) + 80 * idx, 800, "left")
+			love.graphics.setColor(1, 1, 1, 1)
+			love.graphics.printf(mode.name, 38, (360 - (80*(self.menu_state.mode)) + 80 * idx) - 2, 800, "left")
 		end
 	end
 	for idx, ruleset in pairs(rulesets) do
 		if(idx >= self.menu_state.ruleset-9 and idx <= self.menu_state.ruleset+9) then
-			love.graphics.printf(ruleset.name, 360, (260 - 20*(self.menu_state.ruleset)) + 20 * idx, 160, "left")
+			love.graphics.setColor(0, 0, 0, 0.5)
+			love.graphics.printf(ruleset.name, 680, (360 - 80*(self.menu_state.ruleset)) + 80 * idx, 960, "left")
+			love.graphics.setColor(1, 1, 1, 1)
+			love.graphics.printf(ruleset.name, 678, ((360 - 80*(self.menu_state.ruleset)) + 80 * idx) - 2, 960, "left")
 		end
 	end
+	love.graphics.draw(misc_graphics["modeshadow"], 0, 0)
+
+	love.graphics.setFont(font_New_Big)
+	love.graphics.setColor(0, 0, 0, 0.5)
+	love.graphics.printf("Select your mode", 250, 40, 800, "center")
+	love.graphics.setColor(1, 1, 1, 1)
+	love.graphics.printf("Select your mode", 248, 38, 800, "center")
+
+	love.audio.stop(sounds.powermode) --in case someone quits out of Powerstack with Power Mode active
+	love.audio.stop(sounds.topout) -- in case someone quits out of game overing early
 end
 
 function ModeSelectScene:onInputPress(e)
-	if e.input == "menu_decide" or e.scancode == "return" then
+	if e.input == "rotate_left" or e.scancode == "return" then
 		current_mode = self.menu_state.mode
 		current_ruleset = self.menu_state.ruleset
 		config.current_mode = current_mode
 		config.current_ruleset = current_ruleset
-		playSE("mode_decide")
+		--playSE("mode_decide") - i'll find a better sound for this at some point!
 		saveConfig()
 		scene = GameScene(game_modes[self.menu_state.mode], rulesets[self.menu_state.ruleset], self.secret_inputs)
 	elseif e.input == "up" or e.scancode == "up" then
@@ -85,7 +99,8 @@ function ModeSelectScene:onInputPress(e)
 	elseif e.input == "left" or e.input == "right" or e.scancode == "left" or e.scancode == "right" then
 		self:switchSelect()
 		playSE("cursor_lr")
-	elseif e.input == "menu_back" or e.scancode == "delete" or e.scancode == "backspace" then
+	elseif e.input == "rotate_right" or e.scancode == "delete" or e.scancode == "backspace" or e.scancode == "escape" then
+		playSE("menu_back")
 		scene = TitleScene()
 	elseif e.input then
 		self.secret_inputs[e.input] = true

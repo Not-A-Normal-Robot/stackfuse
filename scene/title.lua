@@ -14,15 +14,14 @@ local mainmenuidle = {
 	"Idle",
 	"On title screen",
 	"On main menu screen",
-	"Twiddling their thumbs",
-	"Admiring the main menu's BG",
-	"Waiting for spring to come",
-	"Actually not playing",
-	"Contemplating collecting stars",
-	"Preparing to put the block!!",
-	"Having a nap",
-	"In menus",
-	"Bottom text",
+	"Doing a thing",
+	"Not stacking",
+	"Why are you reading this?",
+	"NOT GAMIG",
+	"Screaming externally",
+	"Admiring modern art",
+	"aaaaaaaajjjjjjjjj",
+	"e",
 }
 
 function TitleScene:new()
@@ -49,20 +48,20 @@ function TitleScene:update()
 end
 
 function TitleScene:render()
-	love.graphics.setFont(font_3x5_2)
+	love.graphics.setFont(font_New_Big)
 
 	love.graphics.setColor(1, 1, 1, 1 - self.snow_bg_opacity)
 	love.graphics.draw(
 		backgrounds["title"],
 		0, 0, 0,
-		0.5, 0.5
+		1,1
 	)
 
 	love.graphics.setColor(1, 1, 1, self.snow_bg_opacity)
 	love.graphics.draw(
 		backgrounds["snow"],
 		0, 0, 0,
-		0.5, 0.5
+		1, 1
 	)
 
 	love.graphics.draw(
@@ -76,14 +75,21 @@ function TitleScene:render()
 	love.graphics.print(self.restart_message and "Restart Cambridge..." or "", 0, 0)
 
 	love.graphics.setColor(1, 1, 1, 0.5)
-	love.graphics.rectangle("fill", 20, 278 + 20 * self.main_menu_state, 160, 22)
+	love.graphics.rectangle("fill", 440, 278 + 80 * self.main_menu_state, 400, 70)
 
+	--first we draw the text shadow...
+	love.graphics.setColor(0, 0, 0, 0.5)
+	for i, screen in pairs(main_menu_screens) do
+		love.graphics.printf(screen.title, 462, 282 + 80 * i, 360, "center")
+	end
+	--and then the main text.
 	love.graphics.setColor(1, 1, 1, 1)
 	for i, screen in pairs(main_menu_screens) do
-		love.graphics.printf(screen.title, 40, 280 + 20 * i, 120, "left")
+		love.graphics.printf(screen.title, 460, 280 + 80 * i, 360, "center")
 	end
 
-	love.graphics.printf(version, 0, 460, love.graphics.getWidth() - 5, "right")
+	love.graphics.setFont(font_New)
+	love.graphics.printf("stackfuse // " .. getVersionNumber(), -16, 680, 1280, "right")
 end
 
 function TitleScene:changeOption(rel)
@@ -92,8 +98,8 @@ function TitleScene:changeOption(rel)
 end
 
 function TitleScene:onInputPress(e)
-	if e.input == "menu_decide" or e.scancode == "return" then
-		playSE("main_decide")
+	if e.input == "rotate_left" or e.scancode == "return" then
+		playSE("ihs")
 		scene = main_menu_screens[self.main_menu_state]()
 	elseif e.input == "up" or e.scancode == "up" then
 		self:changeOption(-1)
@@ -101,7 +107,7 @@ function TitleScene:onInputPress(e)
 	elseif e.input == "down" or e.scancode == "down" then
 		self:changeOption(1)
 		playSE("cursor")
-	elseif e.input == "menu_back" or e.scancode == "backspace" or e.scancode == "delete" then
+	elseif e.input == "rotate_right" or e.scancode == "backspace" or e.scancode == "delete" or e.scancode == "escape" then
 		love.event.quit()
 	else
 		self.text = self.text .. (e.scancode ~= nil and e.scancode or "")
