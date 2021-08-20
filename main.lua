@@ -12,14 +12,14 @@ function love.load()
 	loadSave()
 	require "funcs"
 	require "scene"
-	
+
 	--config["side_next"] = false
 	--config["reverse_rotate"] = true
 	--config["das_last_key"] = false
 	--config["fullscreen"] = false
 
 	love.window.setMode(love.graphics.getWidth(), love.graphics.getHeight(), {resizable = true});
-		
+
 	-- used for screenshots
 	GLOBAL_CANVAS = love.graphics.newCanvas()
 
@@ -66,16 +66,16 @@ function love.draw()
 	love.graphics.setDefaultFilter("linear", "nearest")
 	local width = love.graphics.getWidth()
 	local height = love.graphics.getHeight()
-	local scale_factor = math.min(width / 640, height / 480)
+	local scale_factor = math.min(width / 1280, height / 720)
 	love.graphics.translate(
-		(width - scale_factor * 640) / 2,
-		(height - scale_factor * 480) / 2
+		(width - scale_factor * 1280) / 2,
+		(height - scale_factor * 720) / 2
 	)
 	love.graphics.scale(scale_factor)
-		
+
 	scene:render()
 	love.graphics.pop()
-		
+
 	love.graphics.setCanvas()
 	love.graphics.setColor(1,1,1,1)
 	love.graphics.draw(GLOBAL_CANVAS)
@@ -109,7 +109,7 @@ function love.keypressed(key, scancode)
 		GLOBAL_CANVAS:newImageData():encode("png", ss_name)
 	-- function keys are reserved
 	elseif string.match(scancode, "^f[1-9]$") or string.match(scancode, "^f[1-9][0-9]+$") then
-		return	
+		return
 	-- escape is reserved for menu_back
 	elseif scancode == "escape" then
 		scene:onInputPress({input="menu_back", type="key", key=key, scancode=scancode})
@@ -129,7 +129,7 @@ function love.keyreleased(key, scancode)
 		scene:onInputRelease({input="menu_back", type="key", key=key, scancode=scancode})
 	-- function keys are reserved
 	elseif string.match(scancode, "^f[1-9]$") or string.match(scancode, "^f[1-9][0-9]+$") then
-		return	
+		return
 	-- handle all other keys; tab is reserved, but the input config scene keeps it from getting configured as a game input, so pass tab to the scene here
 	else
 		local input_released = nil
@@ -175,7 +175,7 @@ function love.joystickaxis(joystick, axis, value)
 		config.input.joysticks and
 		config.input.joysticks[joystick:getName()] and
 		config.input.joysticks[joystick:getName()].axes and
-		config.input.joysticks[joystick:getName()].axes[axis] 
+		config.input.joysticks[joystick:getName()].axes[axis]
 	then
 		if math.abs(value) >= 1 then
 			input_pressed = config.input.joysticks[joystick:getName()].axes[axis][value >= 1 and "positive" or "negative"]
@@ -299,10 +299,10 @@ function love.run()
 		if love.timer then
 			processBGMFadeout(love.timer.step())
 		end
-		
+
 		if scene and scene.update and love.timer then
 			scene:update()
-			
+
 			local frame_duration = 1.0 / TARGET_FPS
 			if time_accumulator < frame_duration then
 				if love.graphics and love.graphics.isActive() and love.draw then

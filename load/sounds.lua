@@ -24,6 +24,18 @@ sounds = {
 	ihs = love.audio.newSource("res/se/ihs.wav", "static"),
 	-- a secret sound!
 	welcome = love.audio.newSource("res/se/welcomeToCambridge.wav", "static"),
+	-- and here come the new sounds:
+	caution = love.audio.newSource("res/se/caution.wav", "static"),
+	topout = love.audio.newSource("res/se/topout.wav", "static"),
+	powermode = love.audio.newSource("res/se/powermode.wav", "static"),
+	danger = love.audio.newSource("res/se/danger.wav", "static"),
+	garbage = love.audio.newSource("res/se/garbage.wav", "static"),
+	powererase = love.audio.newSource("res/se/powererase.wav", "static"),
+	finalerase = love.audio.newSource("res/se/finalerase.wav", "static"),
+	wrongerase = love.audio.newSource("res/se/wrongerase.wav", "static"),
+	input = love.audio.newSource("res/se/input.wav", "static"),
+	menu_back = love.audio.newSource("res/se/menu_back.wav", "static"),
+	singlecaution = love.audio.newSource("res/se/singlecaution.wav", "static"),
 }
 
 function playSE(sound, subsound)

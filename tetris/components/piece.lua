@@ -160,10 +160,10 @@ function Piece:draw(opacity, brightness, grid, partial_das)
 	love.graphics.setColor(brightness, brightness, brightness, opacity)
 	local offsets = self:getBlockOffsets()
 	local gravity_offset = 0
-	if config.gamesettings.smooth_movement == 1 and 
+	--[[if config.gamesettings.smooth_movement == 1 and
 	   grid ~= nil and not self:isDropBlocked(grid) then
-		gravity_offset = self.gravity * 16
-	end
+		gravity_offset = self.gravity * 24
+	end]]
 	if partial_das == nil then partial_das = 0 end
 	for index, offset in pairs(offsets) do
 		local x = self.position.x + offset.x
@@ -171,13 +171,13 @@ function Piece:draw(opacity, brightness, grid, partial_das)
 		if self.big then
 			love.graphics.draw(
 				blocks[self.skin][self.colour],
-				64+x*32+partial_das*2, 16+y*32+gravity_offset*2,
+				512+x*32+partial_das*2, 24+y*32+gravity_offset*2,
 				0, 2, 2
 			)
 		else
 			love.graphics.draw(
 				blocks[self.skin][self.colour],
-				64+x*16+partial_das, 16+y*16+gravity_offset
+				512+x*24+partial_das, 24+y*24+gravity_offset
 			)
 		end
 	end

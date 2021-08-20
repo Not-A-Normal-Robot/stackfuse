@@ -7,16 +7,17 @@ local Grid = require 'tetris.components.grid'
 local History4RollsRandomizer = require 'tetris.randomizers.history_4rolls'
 
 local MarathonA1Game = GameMode:extend()
+--local modesounds = sounds:extend()
 
-MarathonA1Game.name = "Marathon A1"
+MarathonA1Game.name = "Hypertap Master"
 MarathonA1Game.hash = "MarathonA1"
-MarathonA1Game.tagline = "Can you score enough points to reach the title of Grand Master?"
+MarathonA1Game.tagline = "Can you score enough points to reach the title of Grand Master, all while risking getting RSI?"
 
-
+--local sounds.lock = love.audio.newSource("res/se/cursor.wav", "static")
 
 function MarathonA1Game:new()
 	MarathonA1Game.super:new()
-	
+
 	self.roll_frames = 0
 	self.combo = 1
 	self.bravos = 0
@@ -30,10 +31,9 @@ function MarathonA1Game:new()
 		"S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9",
 		"GM"
 	}
-	
+
 	self.randomizer = History4RollsRandomizer()
 
-	self.additive_gravity = false
 	self.lock_drop = false
 	self.enable_hard_drop = false
 	self.enable_hold = false
@@ -49,7 +49,7 @@ function MarathonA1Game:getLineARE()
 end
 
 function MarathonA1Game:getDasLimit()
-	return 15
+	return 15000
 end
 
 function MarathonA1Game:getLineClearDelay()
@@ -192,41 +192,42 @@ function MarathonA1Game:drawScoringInfo()
 	MarathonA1Game.super.drawScoringInfo(self)
 	love.graphics.setColor(1, 1, 1, 1)
 
-	love.graphics.setFont(font_3x5_2)
-	love.graphics.print(
-		self.das.direction .. " " ..
-		self.das.frames .. " " ..
-		strTrueValues(self.prev_inputs)
-	)
-	love.graphics.printf("NEXT", 64, 40, 40, "left")
-	love.graphics.printf("GRADE", 240, 120, 40, "left")
-	love.graphics.printf("SCORE", 240, 200, 40, "left")
-	love.graphics.printf("NEXT RANK", 240, 260, 90, "left")
-	love.graphics.printf("LEVEL", 240, 320, 40, "left")
+	love.graphics.setFont(font_New)
+	love.graphics.printf("NEXT", 590, 8, 80, "center")
+	love.graphics.printf("GRADE", 776, 168, 80, "left")
+	love.graphics.printf("SCORE", 776, 288, 80, "left")
+	love.graphics.printf("NEXT RANK", 776, 384, 180, "left")
+	love.graphics.printf("LEVEL", 776, 480, 80, "left")
 	local sg = self.grid:checkSecretGrade()
-	if sg >= 5 then 
-		love.graphics.printf("SECRET GRADE", 240, 430, 180, "left")
-	end
-
-	if self.bravos > 0 then love.graphics.printf("BRAVO", 300, 120, 40, "left") end
-
-	love.graphics.setFont(font_3x5_3)
-	love.graphics.printf(self.score, 240, 220, 90, "left")
-	if self.gm_conditions["level300"] and self.gm_conditions["level500"] and self.gm_conditions["level999"] then
-		love.graphics.printf("GM", 240, 140, 90, "left")
-	else
-		love.graphics.printf(getRankForScore(self.score).rank, 240, 140, 90, "left")
-	end
-	love.graphics.printf(getRankForScore(self.score).next, 240, 280, 90, "left")
-	love.graphics.printf(self.level, 240, 340, 40, "right")
-	love.graphics.printf(self:getSectionEndLevel(), 240, 370, 40, "right")
 	if sg >= 5 then
-		love.graphics.printf(self.SGnames[sg], 240, 450, 180, "left")
+		love.graphics.printf("SECRET GRADE", 776, 648, 360, "left")
 	end
-	if self.bravos > 0 then love.graphics.printf(self.bravos, 300, 140, 40, "left") end
-	
-	love.graphics.setFont(font_8x11)
-	love.graphics.printf(formatTime(self.frames), 64, 420, 160, "center")
+
+	if self.bravos > 0 then love.graphics.printf("BRAVO", 824, 192, 80, "left") end
+
+	love.graphics.setFont(font_New_Big)
+	love.graphics.printf(self.score, 776, 312, 180, "left")
+	if self.gm_conditions["level300"] and self.gm_conditions["level500"] and self.gm_conditions["level999"] then
+		love.graphics.printf("GM", 776, 192, 180, "left")
+	else
+		love.graphics.printf(getRankForScore(self.score).rank, 776, 192, 180, "left")
+	end
+	love.graphics.printf(getRankForScore(self.score).next, 776, 408, 180, "left")
+	love.graphics.printf(self.level, 710, 504, 160, "right")
+	love.graphics.printf(self:getSectionEndLevel(), 710, 555, 160, "right")
+	if sg >= 5 then
+		love.graphics.printf(self.SGnames[sg], 776, 672, 360, "left")
+	end
+	if self.bravos > 0 then love.graphics.printf(self.bravos, 824, 216, 80, "left") end
+
+
+	love.graphics.setColor(1, 0, 0, 1)
+	love.graphics.rectangle("fill", 501, 600, 6, -math.floor((self.level % 100)*4.8) )
+	love.graphics.setColor(1, 1, 1, 1)
+
+	love.graphics.setFont(font_New_Big)
+	love.graphics.printf(formatTime(self.frames), 470, 620, 320, "center")
+
 end
 
 function MarathonA1Game:getSectionEndLevel()

@@ -146,7 +146,7 @@ function GameMode:update(inputs, ruleset)
 	) then
 		self:onAttemptPieceRotate(self.piece, self.grid)
 	end
-	
+
 	if self.piece == nil then
 		self:processDelays(inputs, ruleset)
 	else
@@ -247,7 +247,7 @@ function GameMode:update(inputs, ruleset)
 			if self.immobile_spin_bonus and
 			   self.piece.last_rotated and (
 				self.piece:isDropBlocked(self.grid) and
-				self.piece:isMoveBlocked(self.grid, { x=-1, y=0 }) and 
+				self.piece:isMoveBlocked(self.grid, { x=-1, y=0 }) and
 				self.piece:isMoveBlocked(self.grid, { x=1, y=0 }) and
 				self.piece:isMoveBlocked(self.grid, { x=0, y=-1 })
 			) then
@@ -255,7 +255,7 @@ function GameMode:update(inputs, ruleset)
 			end
 
 			self.grid:applyPiece(self.piece)
-			
+
 			-- mark squares (can be overridden)
 			if self.square_mode then
 				self.squares = self.squares + self.grid:markSquares()
@@ -315,7 +315,7 @@ function GameMode:onAttemptPieceRotate(piece, grid) end
 function GameMode:onPieceMove(piece, grid, dx) end
 function GameMode:onPieceRotate(piece, grid, drot) end
 function GameMode:onPieceDrop(piece, grid, dy) end
-function GameMode:onPieceLock(piece, cleared_row_count) 
+function GameMode:onPieceLock(piece, cleared_row_count)
 	playSE("lock")
 end
 
@@ -336,16 +336,24 @@ function GameMode:onHardDrop(dropped_row_count)
 end
 
 function GameMode:onGameOver()
+	--[[
 	switchBGM(nil)
 	love.graphics.setColor(0, 0, 0, 1 - 2 ^ (-self.game_over_frames / 30))
 	love.graphics.rectangle(
 		"fill", 64, 80,
 		16 * self.grid.width, 16 * (self.grid.height - 4)
 	)
+	]]
+	switchBGM(nil)
+	love.audio.stop(sounds.powermode)
+	love.graphics.setColor(1, 1, 1, (self.game_over_frames / 10)-2)
+	if self.game_over_frames == 30 then
+		playSEOnce("topout")
+	end
+	love.graphics.draw(misc_graphics["ded"], 0, 0)
 end
 
 function GameMode:onGameComplete()
-	self:onGameOver()
 end
 
 function GameMode:onExit() end
@@ -589,7 +597,7 @@ function GameMode:initializeNextPiece(
 end
 
 function GameMode:playNextSound(ruleset)
-	playSE("blocks", ruleset.next_sounds[self.next_queue[1].shape])
+	--playSE("blocks", ruleset.next_sounds[self.next_queue[1].shape])
 end
 
 function GameMode:getHighScoreData()
@@ -603,7 +611,7 @@ function GameMode:animation(x, y, skin, colour)
 		1, 1, 1,
 		-0.25 + 1.25 * (self.lcd / self.last_lcd),
 		skin, colour,
-		48 + x * 16, y * 16
+		488 + x * 24, y * 24
 	}
 end
 
@@ -615,7 +623,7 @@ function GameMode:drawLineClearAnimation()
 	-- animation function
 	-- params: block x, y, skin, colour
 	-- returns: table with RGBA, skin, colour, x, y
-	
+
 	-- Fadeout (default)
 	--[[
 	function animation(x, y, skin, colour)
@@ -707,7 +715,7 @@ function GameMode:drawNextQueue(ruleset)
 		for index, offset in pairs(offsets) do
 			local x = offset.x + ruleset:getDrawOffset(piece, rotation).x + ruleset.spawn_positions[piece].x
 			local y = offset.y + ruleset:getDrawOffset(piece, rotation).y + 4.7
-			love.graphics.draw(blocks[skin][colourscheme[piece]], pos_x+x*16, pos_y+y*16)
+			love.graphics.draw(blocks[skin][colourscheme[piece]], pos_x+x*24, pos_y+y*24)
 		end
 	end
 	for i = 1, self.next_queue_length do
@@ -715,19 +723,16 @@ function GameMode:drawNextQueue(ruleset)
 		local next_piece = self.next_queue[i].shape
 		local skin = self.next_queue[i].skin
 		local rotation = self.next_queue[i].orientation
-		if config.side_next then -- next at side
-			drawPiece(next_piece, skin, ruleset.block_offsets[next_piece][rotation], 192, -16+i*48)
-		else -- next at top
-			drawPiece(next_piece, skin, ruleset.block_offsets[next_piece][rotation], -16+i*80, -32)
-		end
+		--always draw top
+		drawPiece(next_piece, skin, ruleset.block_offsets[next_piece][rotation], (-36+i*120)+428, -32)
 	end
 	if self.hold_queue ~= nil and self.enable_hold then
 		self:setHoldOpacity()
 		drawPiece(
-			self.hold_queue.shape, 
-			self.hold_queue.skin, 
+			self.hold_queue.shape,
+			self.hold_queue.skin,
 			ruleset.block_offsets[self.hold_queue.shape][self.hold_queue.orientation],
-			-16, -32
+			404, -32
 		)
 	end
 	return false
@@ -824,7 +829,7 @@ end
 
 function GameMode:drawSectionTimesWithSplits(current_section, section_limit)
 	section_limit = section_limit or math.huge
-	
+
 	local section_x = 440
 	local split_x = 530
 
@@ -839,7 +844,7 @@ function GameMode:drawSectionTimesWithSplits(current_section, section_limit)
 			love.graphics.printf(formatTime(split_time), split_x, 40 + 20 * section, 90, "left")
 		end
 	end
-	
+
 	if (current_section <= section_limit) then
 		love.graphics.printf(formatTime(self.frames - self.section_start_time), section_x, 40 + 20 * current_section, 90, "left")
 		love.graphics.printf(formatTime(self.frames), split_x, 40 + 20 * current_section, 90, "left")
@@ -851,14 +856,16 @@ function GameMode:drawBackground()
 	love.graphics.draw(
 		backgrounds[self:getBackground()],
 		0, 0, 0,
-		0.5, 0.5
+		1, 1
 	)
 end
 
 function GameMode:drawFrame()
+	-- actually, drawing the shadow effect in the same breath. sorry lole
+	love.graphics.draw(misc_graphics["shadoweffect"], 0, 0)
 	-- game frame
 	if self.grid.width == 10 and self.grid.height == 24 then
-		love.graphics.draw(misc_graphics["frame"], 48, 64)
+		love.graphics.draw(misc_graphics["frame"], 485, 93)
 	else
 		love.graphics.setColor(174/255, 83/255, 76/255, 1)
 		love.graphics.setLineWidth(8)
@@ -890,19 +897,21 @@ end
 function GameMode:drawReadyGo()
 	-- ready/go graphics
 	love.graphics.setColor(1, 1, 1, 1)
-
+	love.graphics.setFont(font_New_Big)
 	if self.ready_frames <= 100 and self.ready_frames > 52 then
-		love.graphics.draw(misc_graphics["ready"], 144 - 50, 240 - 14)
+		love.graphics.setColor(1, (5 / ((self.ready_frames) - 52)) , 0, 1)
+		love.graphics.printf("READY...", 0, 320, 1272, "center")
 	elseif self.ready_frames <= 50 and self.ready_frames > 2 then
-		love.graphics.draw(misc_graphics["go"], 144 - 27, 240 - 14)
+		love.graphics.setColor(((self.ready_frames) / 50), 1, 0, 1)
+		love.graphics.printf("GO!", 0, 320, 1272, "center")
 	end
 end
 
 function GameMode:drawCustom() end
 
 function GameMode:drawIfPaused()
-	love.graphics.setFont(font_3x5_3)
-	love.graphics.printf("GAME PAUSED!", 64, 160, 160, "center")
+	love.graphics.setFont(font_New_Big)
+	love.graphics.printf("PAUSED!", 0, 320, 1272, "center")
 end
 
 -- transforms specified in here will transform the whole screen
@@ -926,14 +935,10 @@ function GameMode:draw(paused)
 		self:drawLineClearAnimation()
 	end
 
+	love.graphics.setFont(font_New)
 	love.graphics.setColor(1, 1, 1, 1)
-	love.graphics.setFont(font_3x5_2)
-	if config.gamesettings.display_gamemode == 1 then
-		love.graphics.printf(
-			self.name .. " - " .. self.ruleset.name,
-			0, 460, 640, "left"
-		)
-	end
+	love.graphics.printf(self.name .. " // " .. self.ruleset.name, 16, 680, 1280, "left")
+	love.graphics.printf("stackfuse // " .. getVersionNumber(), -16, 680, 1280, "right")
 
 	if paused then
 		self:drawIfPaused()

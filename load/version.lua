@@ -1,1 +1,4 @@
-version = "v0.3-beta6"
+version = "v2-Git"
+function getVersionNumber()
+	return version
+end

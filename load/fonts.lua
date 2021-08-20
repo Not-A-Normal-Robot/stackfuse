@@ -1,3 +1,4 @@
+--fallback fonts
 font_3x5 = love.graphics.newImageFont(
 	"res/fonts/3x5.png",
 	" !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_" ..
@@ -31,3 +32,7 @@ font_8x11 = love.graphics.newImageFont(
 	"0123456789:.",
 	1
 )
+
+--the good shit
+font_New = love.graphics.newFont("res/fonts/JetBrainsMono-Regular.ttf", 24)
+font_New_Big = love.graphics.newFont("res/fonts/JetBrainsMono-Regular.ttf", 48)
