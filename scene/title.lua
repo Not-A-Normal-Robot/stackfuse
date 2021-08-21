@@ -3,12 +3,23 @@ local TitleScene = Scene:extend()
 TitleScene.title = "Title"
 TitleScene.restart_message = false
 
-local main_menu_screens = {
-	ModeSelectScene,
-	SettingsScene,
-	CreditsScene,
-	ExitScene,
-}
+local main_menu_screens = {}
+
+if config.gamesettings.hyper then
+	main_menu_screens = {
+		DifficultyScene,
+		SettingsScene,
+		CreditsScene,
+		ExitScene,
+	}
+else
+	main_menu_screens = {
+		ModeSelectScene,
+		SettingsScene,
+		CreditsScene,
+		ExitScene,
+	}
+end
 
 local mainmenuidle = {
 	"Idle",

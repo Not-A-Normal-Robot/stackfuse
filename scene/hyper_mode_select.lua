@@ -1,19 +1,11 @@
-local ModeSelectScene = Scene:extend()
+local HyperModeSelectScene = Scene:extend()
 
-ModeSelectScene.title = ""
-
-if config.gamesettings.hyper then
-	ModeSelectScene.title = "Normal Mode"
-else
-	ModeSelectScene.title = "Game Start"
-end
-
---ModeSelectScene.title = "Normal Mode"
+HyperModeSelectScene.title = "Hyper Mode"
 
 current_mode = 1
 current_ruleset = 1
 
-function ModeSelectScene:new()
+function HyperModeSelectScene:new()
 	self.menu_state = {
 		mode = current_mode,
 		ruleset = current_ruleset,
@@ -33,11 +25,11 @@ function ModeSelectScene:new()
 	})
 end
 
-function ModeSelectScene:update()
+function HyperModeSelectScene:update()
 	switchBGM(nil) -- experimental
 end
 
-function ModeSelectScene:render()
+function HyperModeSelectScene:render()
 	love.graphics.draw(
 		backgrounds["game_config"],
 		0, 0, 0,
@@ -61,7 +53,7 @@ function ModeSelectScene:render()
 	love.graphics.setColor(1, 1, 1, 1)
 
 	love.graphics.setFont(font_New_Big)
-	for idx, mode in pairs(game_modes) do
+	for idx, mode in pairs(hyper_game_modes) do
 		if(idx >= self.menu_state.mode-9 and idx <= self.menu_state.mode+9) then
 			love.graphics.setColor(0, 0, 0, 0.5)
 			love.graphics.printf(mode.name, 40, 360 - (80*(self.menu_state.mode)) + 80 * idx, 800, "left")
@@ -82,18 +74,14 @@ function ModeSelectScene:render()
 	love.graphics.setFont(font_New_Big)
 	love.graphics.setColor(0, 0, 0, 0.5)
 	love.graphics.printf("Select your mode", 250, 40, 800, "center")
-	if config.gamesettings.hyper then
-		love.graphics.setColor(1, 0, 0, 1)
-	else
-		love.graphics.setColor(1, 1, 1, 1)
-	end
+	love.graphics.setColor(0, 1, 0, 1)
 	love.graphics.printf("Select your mode", 248, 38, 800, "center")
 
 	love.audio.stop(sounds.powermode) --in case someone quits out of Powerstack with Power Mode active
 	love.audio.stop(sounds.topout) -- in case someone quits out of game overing early
 end
 
-function ModeSelectScene:onInputPress(e)
+function HyperModeSelectScene:onInputPress(e)
 	if e.input == "rotate_left" or e.scancode == "return" then
 		current_mode = self.menu_state.mode
 		current_ruleset = self.menu_state.ruleset
@@ -101,7 +89,7 @@ function ModeSelectScene:onInputPress(e)
 		config.current_ruleset = current_ruleset
 		--playSE("mode_decide") - i'll find a better sound for this at some point!
 		saveConfig()
-		scene = GameScene(game_modes[self.menu_state.mode], rulesets[self.menu_state.ruleset], self.secret_inputs)
+		scene = GameScene(hyper_game_modes[self.menu_state.mode], rulesets[self.menu_state.ruleset], self.secret_inputs)
 	elseif e.input == "up" or e.scancode == "up" then
 		self:changeOption(-1)
 		playSE("cursor")
@@ -119,13 +107,13 @@ function ModeSelectScene:onInputPress(e)
 	end
 end
 
-function ModeSelectScene:onInputRelease(e)
+function HyperModeSelectScene:onInputRelease(e)
 	if e.input == "hold" or (e.input and string.sub(e.input, 1, 7) == "rotate_") then
 		self.secret_inputs[e.input] = false
 	end
 end
 
-function ModeSelectScene:changeOption(rel)
+function HyperModeSelectScene:changeOption(rel)
 	if self.menu_state.select == "mode" then
 		self:changeMode(rel)
 	elseif self.menu_state.select == "ruleset" then
@@ -133,7 +121,7 @@ function ModeSelectScene:changeOption(rel)
 	end
 end
 
-function ModeSelectScene:switchSelect(rel)
+function HyperModeSelectScene:switchSelect(rel)
 	if self.menu_state.select == "mode" then
 		self.menu_state.select = "ruleset"
 	elseif self.menu_state.select == "ruleset" then
@@ -141,14 +129,14 @@ function ModeSelectScene:switchSelect(rel)
 	end
 end
 
-function ModeSelectScene:changeMode(rel)
-	local len = table.getn(game_modes)
+function HyperModeSelectScene:changeMode(rel)
+	local len = table.getn(hyper_game_modes)
 	self.menu_state.mode = (self.menu_state.mode + len + rel - 1) % len + 1
 end
 
-function ModeSelectScene:changeRuleset(rel)
+function HyperModeSelectScene:changeRuleset(rel)
 	local len = table.getn(rulesets)
 	self.menu_state.ruleset = (self.menu_state.ruleset + len + rel - 1) % len + 1
 end
 
-return ModeSelectScene
+return HyperModeSelectScene

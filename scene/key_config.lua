@@ -34,6 +34,8 @@ local configurable_inputs_readable = {
 	"Pause",
 }
 
+local inputs = {}
+
 local function newSetInputs()
 	local set_inputs = {}
 	for i, input in ipairs(configurable_inputs) do
@@ -51,6 +53,9 @@ function KeyConfigScene:new()
 		details = "In menus",
 		state = "Changing key config",
 	})
+
+	inputs = {}
+	brerb = ""
 end
 
 function KeyConfigScene:update()
@@ -118,9 +123,42 @@ function KeyConfigScene:render()
 
 	love.graphics.setFont(font_New_Big)
 	love.graphics.printf("Key Config", 360, 40, 560, "center")
+
+	--secret text! don't breathe this
+	love.graphics.setFont(font_New)
+	love.graphics.setColor(1, 0, 0, 1)
+	love.graphics.printf(brerb, 0, 0, 1280, "left")
 end
 
 function KeyConfigScene:onInputPress(e)
+
+	local a = {
+		"a",
+		"r",
+		"s",
+		"t",
+		"d",
+		"h",
+		"n",
+		"e",
+		"i",
+		"o",
+		"q",
+		"w",
+	}
+
+	table.insert(inputs, love.keyboard.getKeyFromScancode(e.scancode))
+
+	local correct = true
+	for i=1,#a do
+    	if inputs[i] ~= a[i] then
+        	correct = false
+        	break
+    	end
+	end
+
+
+
 	if e.type == "key" then
 		-- function keys, escape, and tab are reserved and can't be remapped
 		if e.scancode == "escape" then
@@ -159,6 +197,27 @@ function KeyConfigScene:onInputPress(e)
 			self.new_input[e.scancode] = configurable_inputs[self.input_state]
             self.input_state = self.input_state + 1
 			playSE("lock")
+		end
+	end
+	if correct then
+		if not config.gamesettings.hyper then
+			self.input_state = 1
+			self.set_inputs = newSetInputs()
+			self.new_input = {}
+			inputs = {}
+			playSE("singlecaution")
+			config.gamesettings.hyper = true
+			brerb = "You might want to restart your game..."
+			saveConfig()
+		elseif config.gamesettings.hyper then
+			self.input_state = 1
+			self.set_inputs = newSetInputs()
+			self.new_input = {}
+			inputs = {}
+			playSE("danger")
+			config.gamesettings.hyper = false
+			brerb = "The secret modes have been disabled. Restart to take effect."
+			saveConfig()
 		end
 	end
 end
