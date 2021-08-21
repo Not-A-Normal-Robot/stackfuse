@@ -216,15 +216,15 @@ function Powerstack:drawScoringInfo()
 	-- funky multiplier bar
 	-- modulo 2 with frame counter for flashing
 	if self.powermode then
-	if (self.frames % 4) == 0 or (self.frames % 4) == 1 then
-		love.graphics.setColor(1, 0, 0, 1)
+		if (self.frames % 4) == 0 or (self.frames % 4) == 1 then
+			love.graphics.setColor(1, 0, 0, 1)
+		else
+			love.graphics.setColor(0.4, 0, 0, 1)
+		end
+		love.graphics.rectangle("fill", 501, 601, 6, -math.min((self.multiplier*9.6),480))
 	else
-		love.graphics.setColor(0.4, 0, 0, 1)
-	end
-	love.graphics.rectangle("fill", 501, 601, 6, -math.min((self.multiplier*9.6),480))
-	else
-	love.graphics.setColor(0, 1, 0, 1)
-	love.graphics.rectangle("fill", 501, 600, 6, -math.min((self.multiplier*9.6),480))
+		love.graphics.setColor(0, 1, 0, 1)
+		love.graphics.rectangle("fill", 501, 600, 6, -math.min((self.multiplier*9.6),480))
 	end
 	love.graphics.setColor(1, 1, 1, 1)
 

@@ -232,14 +232,45 @@ function G_Lock:drawScoringInfo()
 	love.graphics.setFont(font_New_Big)
 	love.graphics.printf(formatTime(self.frames), 470, 620, 320, "center")
 
-	if (self:getSectionEndLevel()-self.pieces) <= 3 and (self:getSectionEndLevel()-self.pieces) ~= 0 then
-	love.graphics.setColor(1, 1, 1, 1)
-	elseif self:getSectionEndLevel() == self.pieces then
-	love.graphics.setColor(1, 0, 0, 1)
+
+	if self:getGSectionState() then
+		if (self:getSectionEndLevel()-self.pieces) <= 3 and (self:getSectionEndLevel()-self.pieces) ~= 0 then
+			if (self.frames % 4) == 0 or (self.frames % 4) == 1 then
+				love.graphics.setColor(1, 1, 1, 1)
+			else
+				love.graphics.setColor(0.9, 0.9, 0.9, 1)
+			end
+		elseif self:getSectionEndLevel() == self.pieces then
+			if (self.frames % 4) == 0 or (self.frames % 4) == 1 then
+				love.graphics.setColor(1, 0, 0, 1)
+			else
+				love.graphics.setColor(0.9, 0.9, 0.9, 1)
+			end
+		else
+			if (self.frames % 4) == 0 or (self.frames % 4) == 1 then
+				love.graphics.setColor(1, 1, 1, 1)
+			else
+				love.graphics.setColor(0.95, 0.95, 0.95, 1)
+			end
+		end
 	else
-	love.graphics.setColor(0, 1, 0, 1)
+		if (self:getSectionEndLevel()-self.pieces) <= 3 and (self:getSectionEndLevel()-self.pieces) ~= 0 then
+			love.graphics.setColor(1, 1, 1, 1)
+		elseif self:getSectionEndLevel() == self.pieces then
+			love.graphics.setColor(1, 0, 0, 1)
+		else
+			love.graphics.setColor(0, 1, 0, 1)
+		end
 	end
-	--inverted haha yes
+--[[
+	if (self:getSectionEndLevel()-self.pieces) <= 3 and (self:getSectionEndLevel()-self.pieces) ~= 0 then
+		love.graphics.setColor(1, 1, 1, 1)
+	elseif self:getSectionEndLevel() == self.pieces then
+		love.graphics.setColor(1, 0, 0, 1)
+	else
+		love.graphics.setColor(0, 1, 0, 1)
+	end]]
+	--how bar
 	if self:getGSectionState() then
 		love.graphics.rectangle("fill", 501, 600, 6, -math.min((((self:getSectionEndLevel()-self.pieces)/(self:getSectionEndLevel()-self:getPreviousSectionEnd()+1))*480),480))
 	else

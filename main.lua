@@ -18,6 +18,13 @@ function love.load()
 	--config["das_last_key"] = false
 	--config["fullscreen"] = false
 
+    runsystem = {
+        drawfps = 0,
+        updatefps = 0,
+        updatedelta = 0,
+        showperformancestatistics = false
+    }
+
 	love.window.setMode(love.graphics.getWidth(), love.graphics.getHeight(), {resizable = true});
 
 	-- used for screenshots
@@ -34,7 +41,6 @@ function love.load()
 end
 
 function initModules()
-	--[[
 	game_modes = {}
 	mode_list = love.filesystem.getDirectoryItems("tetris/modes")
 	for i=1,#mode_list do
@@ -55,20 +61,6 @@ function initModules()
 	return tostring(a.name):gsub("%d+",padnum) < tostring(b.name):gsub("%d+",padnum) end)
 	table.sort(rulesets, function(a,b)
 	return tostring(a.name):gsub("%d+",padnum) < tostring(b.name):gsub("%d+",padnum) end)
-	]]
-	game_modes = {
-		require 'tetris.modes.liftoff',
-		require 'tetris.modes.prism',
-		require 'tetris.modes.powerstack',
-		require 'tetris.modes.g-lock',
-	}
-	rulesets = {
-		require 'tetris.rulesets.arika',
-		require 'tetris.rulesets.arika_ti',
-		require 'tetris.rulesets.fars',
-		require 'tetris.rulesets.standard_exp',
-		require 'tetris.rulesets.ti_srs',
-	}
 end
 
 function love.draw()
@@ -89,6 +81,14 @@ function love.draw()
 	love.graphics.scale(scale_factor)
 
 	scene:render()
+
+    if runsystem.showperformancestatistics then
+        love.graphics.setColor(1, 1, 1, 1)
+        love.graphics.print('u='..tostring(runsystem.updatefps)..
+                            '\nd='..tostring(runsystem.drawfps)..
+                            '\ndel='..tostring(runsystem.updatedelta), 0, 0)
+    end
+
 	love.graphics.pop()
 
 	love.graphics.setCanvas()
@@ -112,9 +112,9 @@ function love.keypressed(key, scancode)
 		scene.restart_message = true
 		if config.secret then playSE("mode_decide")
 		else playSE("erase") end
-		-- f12 is reserved for saving screenshots
-		elseif scancode == "f12" then
-				local ss_name = os.date("ss/%Y-%m-%d_%H-%M-%S.png")
+	-- f12 is reserved for saving screenshots
+	elseif scancode == "f12" then
+		local ss_name = os.date("ss/%Y-%m-%d_%H-%M-%S.png")
 		local info = love.filesystem.getInfo("ss", "directory")
 		if not info then
 			love.filesystem.remove("ss")
@@ -122,6 +122,9 @@ function love.keypressed(key, scancode)
 		end
 		print("Saving screenshot as "..ss_name)
 		GLOBAL_CANVAS:newImageData():encode("png", ss_name)
+    -- F9 toggles performance statistics for the new runsystem
+    elseif scancode == "f9" then
+        runsystem.showperformancestatistics = not runsystem.showperformancestatistics
 	-- function keys are reserved
 	elseif string.match(scancode, "^f[1-9]$") or string.match(scancode, "^f[1-9][0-9]+$") then
 		return
@@ -288,7 +291,10 @@ function love.resize(w, h)
 end
 
 local TARGET_FPS = 60
+local TARGET_UPS = 1000
 
+--[[
+-- OLD RUN CODE BELOW
 function love.run()
 	if love.load then love.load(love.arg.parseGameArguments(arg), arg) end
 
@@ -338,4 +344,72 @@ function love.run()
 		end
 		last_time = love.timer.getTime()
 	end
+end
+]]
+
+function love.run()
+    -- New Run system
+    -- by rin
+    -- aims to speedup the responsiveness of the game by
+    -- only updating 60 times per second, but letting
+    -- it poll as fast as it wants
+
+    if not love.timer then
+        error('new run system requires love.timer to function.')
+    end
+
+    if love.load then love.load(love.arg.parseGameArguments(arg), arg) end
+
+	if love.timer then love.timer.step() end
+
+    local u_tacc = 0
+    local tacc = 0
+    local start_time = love.timer.getTime()
+
+    return function()
+        local ut = love.timer.getTime()
+        runsystem.updatedelta = ut - start_time
+
+        if love.event then
+            u_tacc = u_tacc + runsystem.updatedelta
+
+            if u_tacc >= 1 / TARGET_UPS then
+                runsystem.updatefps = 1 / u_tacc
+                u_tacc = 0
+                love.event.pump()
+                for n, a, b, c, d, e, f in love.event.poll() do
+                    if n == 'quit' then
+                        if not love.quit or not love.quit() then
+                            return a or 0
+                        end
+                    end
+                    love.handlers[n](a, b, c, d, e, f)
+                end
+            end
+        end
+
+        if love.timer then
+			processBGMFadeout(love.timer.step())
+		end
+
+        if scene and scene.update and love.timer then
+            local delta = ut - start_time
+            start_time = ut
+            tacc = tacc + delta
+
+            if tacc >= 1 / TARGET_FPS then
+                runsystem.drawfps = 1 / tacc
+                tacc = 0
+
+                scene:update()
+
+				if love.graphics and love.graphics.isActive() and love.draw then
+					love.graphics.origin()
+					love.graphics.clear(love.graphics.getBackgroundColor())
+					love.draw()
+					love.graphics.present()
+				end
+            end
+        end
+    end
 end
