@@ -1,111 +1,69 @@
-![Cambridge Banner](https://t-sp.in/public/img/cambridge.png)
+![stackfuse banner](https://media.discordapp.net/attachments/806285072046751780/806547308376227840/stackfuse_logo.png)
 
-Cambridge
-=========
+[Come join the Discord server for updates on stackfuse.](https://discord.gg/Cr2k2UEvVE)
 
-Welcome to Cambridge, the next open-source falling-block game engine!
+**stackfuse** is a **work-in-progress** fork of [Cambridge](https://github.com/SashLilac/cambridge), an open-source arcade stacking game. It is not intended to be clean, it is not intended to be built upon, it is not intended to be better than Cambridge. It's intended to be its own thing, with its own game modes and own assets and everything that goes along with that. If you want to actually improve the engine and contribute, please go help out the actual Cambridge project and not this. This fork is mainly a way to strive for creativity, not for improvement.
 
-The project is written and maintained exclusively by [Milla](https://github.com/MillaBasset), [joezeng](https://github.com/joezeng) and [Oshisaure](https://github.com/oshisaure)!  
+I am aware that the source code may not be the cleanest, and that a bunch of things can still be improved. I am learing as I go along with this project.
 
-The Discord server has been reopened! https://discord.gg/AADZUmgsph
+## Features and WIP
+* Cambridge Engine fully ported to 720p
+* New gamemodes, see further down below
+* Forced step or move reset depending on the mode
+* All new assets mostly made by myself
 
-The game also has a website now with more detail than seen on this README: https://t-sp.in/cambridge
+## Gamemodes
 
-Playing the game
-----------------
+Skill check and winning conditions are **written in bold.**
 
-### Windows
+* Powerstack: A survival-oriented gamemode where your goal is to keep your multiplier up high and extend your time limit. High score is defined by amount of levels you got. While you are in Power mode, line clears count twice as much. **There is no winning condition for Powerstack. Go as far as you can!**
 
-You do not need LÖVE on Windows, as it comes bundled with the program.  
+* Liftoff: The stack lifts off the ground after a certain amount of placed pieces, and this interval will speed up over time, but so will the speed curve in general. Can you reach 999999? **Once you reach 999999, you win. Currently there are no line gradings in place, but this is subject to change.**
 
-#### Stable release
+* Prism: You have to follow a pattern of how many lines to clear at once. The pattern is 1, 2, 3, 4, 3, 2 and then repeats. Any wrong line clear will give you garbage below the screen and ruin your chances of passing the skill check. Has a relatively relaxed speed curve, with a win condition of doing the pattern 10 times in a row. **To beat the skill check, you have to clear the pattern 5 times without a wrong line clear in under 2:20. After this, if you beat the 10th line clear loop (150 Lines total), you win.**
 
-To get the stable release, simply download either `cambridge-win32.zip` (32-bit) or `cambridge-windows.zip` (64-bit) in the [latest release](https://github.com/MillaBasset/cambridge/releases/latest).  
+* G-Lock: Stack fast under the fluctuating speeds - use the faster sections to your advantage! **The game ends when you place the 500th piece and rewards you with a green line - if you go faster than 4:30, you get an orange line, and if you go above and beyond with a 4:00, you get a blue line.**
 
-All assets needed are bundled with the executable.
+### Planned modes:
 
-#### Bleeding edge
+* Clockwork: Time is ticking. A survival mode with no win condition, the only goal is to survive for as long as possible. The ticking increases over time, and such, your placement limits will decrease, leading to eventual topout.
 
-If you want the bleeding edge version, download [this](https://github.com/MillaBasset/cambridge/archive/master.zip).
+* Loop: Has a loop system. After 50 Lines you earn one Loop, you roll back in levels but timings shorten. Constant 1G after 1 loop, constant 2G after 3 loops. At 5 loops, you have reached the fastest speeds and the game stops looping. **Reach 400 lines for a surprise.**
 
-Extract the ZIP, open a Command Prompt at the folder you extracted Cambridge to, then run this command:
+* Demon Fuel: Inspired by a game called Devil Daggers. Survive for as long as you can (in seconds) with different gimmicks coming in at certain points. Will include "bombs" to wipe the field.
 
-	dist\windows\love.exe .
+Not sure if it'll exist yet:
+* Boss battles: They will probably be called differently, but basically, you "fight bosses" by depleting their HP with combos and quad line clears. Bosses have multiple phases and different attack patterns by utilizing item-like effects on your board. As for what attacks exactly these bosses will have, who knows... I know I don't. Not yet, anyways.
 
-Alternatively, if you're on a 32-bit system, run this instead:
+## Playing the game
 
-	dist\win32\love.exe .
+Download the current release in the releases tab. Windows players can just grab one of the Windows packages (though on the 32 bit version, the Discord Rich Presence doesn't work. I am aware of this bug and I'll eventually look into it).
 
-32-bit systems do not support rich presence integration.
+Linux/macOS users will have to download the .love file and run it from a terminal by executing love with the path to the stackfuse.love file.
 
-Then, check the mod pack section at the bottom of this page.
+You can also clone the repository and try bleeding edge features if I pushed any, but there may be potential breakage. Use at your own risk.
 
-### macOS, Linux
+## Things left to do
 
-If you haven't already, install `love` with your favourite package manager (Homebrew on macOS, your system's default on Linux). **Make sure you're using LÖVE 11, because it won't work with earlier versions!**
+Development of stackfuse is an ongoing process, and such, there's always things to do. Here are things I might do in the future:
+* New sound effects (there's only one or two missing now)
+* BGM (I used to make music with LSDJ, I'll figure something out...)
+* A custom mode selection menu with difficulty selection (still missing difficulties, I may try and look into adding a hidden toggle for a harder mode, where I haven't decided on how to tackle it yet)
+* Create new backgrounds (This is an ongoing process)
+* Other game mode concepts? Surely I can think of more.
 
-#### Downloading a release
+## Credits
 
-You can download the .love file in the latest release, and run it with:
+Basically, nearly all changes in this fork (compared to Cambridge) were done by myself (This means new code, sound and graphics assets, mode design and testing among other things), with small bits of help by those who are in the Cambridge Discord server. Without them, stackfuse probably wouldn't exist, so I highly appreciate them taking their time to help me with my spaghetti code.
 
-    love cambridge.love
+If you want to see who worked on the original Cambridge project, please check the [Cambridge repository](https://github.com/SashLilac/cambridge) for those credits.
 
-#### Installing from source
+## License
 
-Clone the repository in git:
-
-	git clone https://github.com/MillaBasset/cambridge
-
-Alternatively, download the source code ZIP in the latest release.
-
-Then, navigate to the root directory that you just cloned, and type:
-
-	love .
-
-It should run automatically!
-
-## Installing modpacks
-
-For instructions on how to install modpacks, go to [this](https://github.com/MillaBasset/cambridge-modpack) mod pack to get a taste of the mod potential.
-
-License
--------
-
-The Cambridge project is licensed under the MIT license (included in LICENSE.md).
+As this fork is based on Cambridge, which is licensed under a MIT license, stackfuse is too - however, **I would appreciate if you wouldn't implement my own gamemodes in your own engines, unless you ask me first. I'll likely allow it if you do so. However, nothing is stopping you either.**
 
 Some code and assets in this repository are contributed by members of the
 community, as well as borrowed from other places, either with licensing
 or as placeholders until suitable material can be found that is properly
 licensed. Their original sources, and copyright notices if applicable, are
-listed in the file SOURCES.
-
-Credits
--------
-
-- [Lilla Oshisaure](https://www.youtube.com/user/LeSpyroshisaure) for being my co-dev!
-- [joezeng](https://github.com/joezeng) for the original project, and for offering to help with the expansion!
-- [The Tetra Legends Discord](http://discord.com/invite/7hMx5r2) for supporting me and playtesting!
-- [The Absolute Plus](https://discord.gg/6Gf2awJ) for being another source of motivation!
-
-More special thanks can be found in-game, under the "Credits" menu.
-
-Other Notable Games
--------------------
-
-- [TGMsim](https://github.com/2Tie/TGMsim) by 2Tie
-- [Multimino](https://gamejolt.com/games/multimino/556683) by Axel Fox
-- [Tetra Legends](https://tetralegends.app) by Dr Ocelot
-- [ZTrix](https://discord.gg/MGhqCBDGNH) by Electra
-- [Shiromino](https://github.com/shiromino/shiromino) by Felicity/nightmareci/kdex
-- [Cursed Blocks](https://github.com/Manabender/Cursed-Blocks) by Manabender
-- [Picoris 2](https://www.lexaloffle.com/bbs/?tid=41733) by MarkGamed
-- [Tetra Online](https://github.com/Juan-Cartes/Tetra-Offline) by Mine
-- [Techmino](https://discord.gg/6Yuww44tq8) by MrZ
-- [Example Block Game](https://github.com/oshisaure/example-block-game) by Oshisaure
-- [TETR.IO](https://tetr.io) by osk
-- [Master of Blocks](https://discord.gg/72FZ49mjWh) by Phoenix Flare
-- [Spirit Drop](https://rayblastgames.com/spiritdrop.php) by RayRay26
-- [Puzzle Trial](https://kagamine-rin.itch.io/puzzle-trial) by Rin
-- [stackfuse](https://github.com/sinefuse/stackfuse) by sinefuse
-
-![Cambridge Logo](https://cdn.discordapp.com/attachments/625496179433668635/763363717730664458/Icon_2.png)
+listed in the file SOURCES. However, I will try and replace most of that stuff with my own things.
