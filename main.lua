@@ -56,6 +56,7 @@ function initModules()
 	}
 	hyper_game_modes = {
 		require 'tetris.modes.hyper.survival_a2',
+		require 'tetris.modes.hyper.hyperprism',
 	}
 end
 

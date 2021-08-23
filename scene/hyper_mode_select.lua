@@ -2,12 +2,12 @@ local HyperModeSelectScene = Scene:extend()
 
 HyperModeSelectScene.title = "Hyper Mode"
 
-current_mode = 1
+current_hyper_mode = 1
 current_ruleset = 1
 
 function HyperModeSelectScene:new()
 	self.menu_state = {
-		mode = current_mode,
+		mode = current_hyper_mode,
 		ruleset = current_ruleset,
 		select = "mode",
 	}
@@ -83,9 +83,9 @@ end
 
 function HyperModeSelectScene:onInputPress(e)
 	if e.input == "rotate_left" or e.scancode == "return" then
-		current_mode = self.menu_state.mode
+		current_hyper_mode = self.menu_state.mode
 		current_ruleset = self.menu_state.ruleset
-		config.current_mode = current_mode
+		config.current_hyper_mode = current_hyper_mode
 		config.current_ruleset = current_ruleset
 		--playSE("mode_decide") - i'll find a better sound for this at some point!
 		saveConfig()

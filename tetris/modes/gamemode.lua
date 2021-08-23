@@ -617,12 +617,19 @@ function GameMode:getHighScoreData()
 end
 
 function GameMode:animation(x, y, skin, colour)
-	return {
+	--[[return {
 		1, 1, 1,
 		-0.25 + 1.25 * (self.lcd / self.last_lcd),
 		skin, colour,
 		488 + x * 24, y * 24
+	}]]
+	return {
+		1, 1, 1,
+		self.lcd % 6 < 3 and 1 or 0.25,
+		skin, colour,
+		488 + x * 24, y * 24
 	}
+
 end
 
 function GameMode:canDrawLCA()
@@ -635,7 +642,7 @@ function GameMode:drawLineClearAnimation()
 	-- returns: table with RGBA, skin, colour, x, y
 
 	-- Fadeout (default)
-	--[[
+--[[
 	function animation(x, y, skin, colour)
 		return {
 			1, 1, 1,
@@ -675,6 +682,7 @@ function GameMode:drawLineClearAnimation()
 	end
 	--]]
 
+
 	for y, row in pairs(self.cleared_block_table) do
 		for x, block in pairs(row) do
 			local animation_table = self:animation(x, y, block.skin, block.colour)
@@ -686,8 +694,11 @@ function GameMode:drawLineClearAnimation()
 				blocks[animation_table[5]][animation_table[6]],
 				animation_table[7], animation_table[8]
 			)
+			--love.graphics.rectangle("fill", animation_table[7], animation_table[8] + 24,  24, math.min(0, -(self.lcd)))
 		end
+
 	end
+
 end
 
 function GameMode:drawPiece()
