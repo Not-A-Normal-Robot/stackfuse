@@ -1,8 +1,4 @@
 bgm = {
-	credit_roll = {
-		gm3 = love.audio.newSource("res/bgm/tgm_credit_roll.mp3", "stream"),
-	},
-	pacer_test = love.audio.newSource("res/bgm/pacer_test.mp3", "stream"),
 }
 
 local current_bgm = nil

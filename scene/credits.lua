@@ -6,7 +6,7 @@ function CreditsScene:new()
     self.frames = 0
     -- higher = slower
     self.scroll_speed = 1.85
-    switchBGM("credit_roll", "gm3")
+    --switchBGM("credit_roll", "gm3")
 end
 
 function CreditsScene:update()
@@ -24,7 +24,7 @@ end
 
 function CreditsScene:render()
     local offset = self.frames / self.scroll_speed
-    
+
     love.graphics.setColor(1, 1, 1, 1)
 	love.graphics.draw(
 		backgrounds[19],

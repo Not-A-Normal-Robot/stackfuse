@@ -8,7 +8,7 @@ local Bag7Randomizer = require 'tetris.randomizers.bag7'
 
 local HyperPrism = GameMode:extend()
 
-HyperPrism.name = "[HYPER] Prism"
+HyperPrism.name = "Hyper Prism"
 HyperPrism.hash = "HyperPrism"
 HyperPrism.tagline = "Taste the rainbow again, motherfucker"
 
@@ -70,20 +70,22 @@ end
 
 function HyperPrism:getGravity()
 	local level = self.level
-	if (level < 2) then return 1/32
-	elseif (level < 3) then return 1/16
-	elseif (level < 4) then return 1/12
-	elseif (level < 5) then return 1/10
-	elseif (level < 7) then return 1/6
-	elseif (level < 8) then return 1/4
-	elseif (level < 10) then return 1/2
-	else return 1
+	if (level < 2) then return 1
+	elseif (level < 3) then return 2
+	elseif (level < 4) then return 5
+	else return 20
 	end
 end
 
 function HyperPrism:getNextLineRequirement()
   local line_strings = {"SINGLE", "DOUBLE", "TRIPLE", "QUAD", "TRIPLE", "DOUBLE"}
-  if self.linecheck <= 6 then return line_strings[self.linecheck] else return "wat" end
+  if self.linecheck <= 6 then
+	  return line_strings[self.linecheck]
+  elseif self.level >= 6 then
+	  return "ALL CLEAR"
+  else
+	  return "well something went wrong"
+  end
 end
 
 
@@ -143,18 +145,12 @@ function HyperPrism:advanceOneFrame()
 end
 
 function HyperPrism:onPieceEnter()
-	if self.garbagecount > 0 then
-		self.grid:copyBottomRow()
-		playSEOnce("garbage")
-		self.garbagecount = 0
-	end
+
 end
 
 function HyperPrism:onPieceLock(piece, cleared_row_count)
 	playSE("lock")
 end
-
--- TODO torikan at 75 lines. conditions: no false lines, certain time limit
 
 function HyperPrism:onLineClear(cleared_row_count)
 	if not self.clear then
@@ -175,37 +171,21 @@ function HyperPrism:onLineClear(cleared_row_count)
 			if self.lines == 73 then
 				--fadeoutBGM(1)
 			end
-			--[[if self.lines == 75 then
-				love.audio.stop(sounds.erase)
-				playSEOnce("finalerase")
-			end]]
-			if self.lines >= 150 then
+			if self.lines == 75 then
 				love.audio.stop(sounds.erase)
 				playSEOnce("finalerase")
 			end
 		else
 			love.audio.stop(sounds.erase)
 			playSEOnce("wrongerase")
-			local fucked_lines = self.fuckedlines + cleared_row_count
+			local fucked_lines = self.fuckedlines + 1
 			self.fuckedlines = fucked_lines
 			local garbo = self.garbagecount + cleared_row_count
 			self.garbagecount = garbo
+			print(self.fuckedlines)
 		end
 	end
 end
-
---[[forced move reset because i can do what i want. eat my ass
-function GLock:whilePieceActive()
-	if not self.piece:isMoveBlocked(self.grid, {x=-1, y=0}) and self.prev_inputs["left"]
-	or not self.piece:isMoveBlocked(self.grid, {x=1, y=0}) and self.prev_inputs["right"] then
-		self.piece.lock_delay = 0
-	end
-	if self.piece:isDropBlocked(self.grid) then
-		self.time_active = self.time_active + 1
-		if self.time_active >= 240 then self.piece.locked = true end
-	end
-end
-]]
 
 function GameMode:onGameOver()
 	switchBGM(nil)
@@ -239,35 +219,36 @@ function HyperPrism:drawScoringInfo()
 	love.graphics.setFont(font_New_Big)
 	love.graphics.printf(self:getNextLineRequirement(), 776, 232, 240, "left")
 	love.graphics.printf(self.lines, 776, 372, 120, "left")
-	love.graphics.printf(self.level, 776, 512, 120, "left")
+	if self.level >= 6 then
+		love.graphics.printf("5", 776, 512, 120, "left")
+	else
+		love.graphics.printf(self.level, 776, 512, 120, "left")
+	end
 
-
-	--bar
-	if self.hypermode then
+	if self.fuckedlines < 1 then
 		if (self.frames % 4) == 0 or (self.frames % 4) == 1 then
 			love.graphics.setColor(0.7, 0.7, 1, 1)
 		else
 			love.graphics.setColor(0.8, 0.8, 1, 1)
 		end
-		love.graphics.rectangle("fill", 501, 600, 6, -math.min((((self.level/5)-1)*480),480))
 	else
 		love.graphics.setColor(0, 1, 0, 1)
-		love.graphics.rectangle("fill", 501, 600, 6, -math.min(((self.level/5)*480),480))
 	end
+	love.graphics.rectangle("fill", 501, 600, 6, -math.min(((self.level/5)*480),480))
 
 
 	love.graphics.setFont(font_New_Big)
-	if self.fuckedlines == 0 and self.frames <= 8699 and not self.hypermode then
+	if self.fuckedlines < 1 then
+		if (self.frames % 4) == 0 or (self.frames % 4) == 1 then
+			love.graphics.setColor(0.7, 0.7, 1, 1)
+		else
+			love.graphics.setColor(0.8, 0.8, 1, 1)
+		end
+	elseif self.fuckedlines < 16 then
 		if (self.frames % 4) == 0 or (self.frames % 4) == 1 then
 			love.graphics.setColor(1, 1, 1, 1)
 		else
 			love.graphics.setColor(1, 1, 0.4, 1)
-		end
-	elseif self.hypermode then
-		if (self.frames % 4) == 0 or (self.frames % 4) == 1 then
-			love.graphics.setColor(0.7, 0.7, 1, 1)
-		else
-			love.graphics.setColor(0.8, 0.8, 1, 1)
 		end
 	else
 		love.graphics.setColor(1, 1, 1, 1)

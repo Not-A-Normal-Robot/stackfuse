@@ -85,7 +85,7 @@ function G_Lock:getLineClearDelay()
     else return 8
 	end]]
 	if self:getGSectionState() then
-		return 10
+		return 4
 	else
 		return 25
 	end
@@ -320,21 +320,21 @@ function G_Lock:getPreviousSectionEnd()
 	elseif self.pieces < 50 then return 20
 	elseif self.pieces < 65 then return 50
 	elseif self.pieces < 115 then return 65
-    	elseif self.pieces < 130 then return 115
+    elseif self.pieces < 130 then return 115
 	elseif self.pieces < 180 then return 130
-    	elseif self.pieces < 195 then return 180
+    elseif self.pieces < 195 then return 180
 	elseif self.pieces < 235 then return 195
-    	elseif self.pieces < 250 then return 235
+    elseif self.pieces < 250 then return 235
 	elseif self.pieces < 275 then return 250
-    	elseif self.pieces < 285 then return 275
+    elseif self.pieces < 285 then return 275
 	elseif self.pieces < 305 then return 285
-    	elseif self.pieces < 315 then return 305
+    elseif self.pieces < 315 then return 305
 	elseif self.pieces < 340 then return 315
 	elseif self.pieces < 350 then return 340
 	elseif self.pieces < 380 then return 350
-    	elseif self.pieces < 395 then return 380
+    elseif self.pieces < 395 then return 380
 	elseif self.pieces < 430 then return 395
-    	elseif self.pieces < 445 then return 430
+    elseif self.pieces < 445 then return 430
 	elseif self.pieces < 475 then return 445
 	else return 475 end
 end
