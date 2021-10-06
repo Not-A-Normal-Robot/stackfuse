@@ -133,18 +133,15 @@ end
 function KeyConfigScene:onInputPress(e)
 
 	local a = {
+		"c",
 		"a",
 		"r",
-		"s",
-		"t",
-		"d",
-		"h",
 		"n",
 		"e",
+		"l",
 		"i",
-		"o",
-		"q",
-		"w",
+		"a",
+		"n",
 	}
 
 	table.insert(inputs, love.keyboard.getKeyFromScancode(e.scancode))
@@ -207,7 +204,7 @@ function KeyConfigScene:onInputPress(e)
 			inputs = {}
 			playSE("singlecaution")
 			config.gamesettings.hyper = true
-			brerb = "You might want to restart your game..."
+			brerb = "Hyper modes enabled. Good luck!"
 			saveConfig()
 		elseif config.gamesettings.hyper then
 			self.input_state = 1
@@ -216,7 +213,7 @@ function KeyConfigScene:onInputPress(e)
 			inputs = {}
 			playSE("danger")
 			config.gamesettings.hyper = false
-			brerb = "The secret modes have been disabled. Restart to take effect."
+			brerb = "Hyper modes disabled. git gud"
 			saveConfig()
 		end
 	end

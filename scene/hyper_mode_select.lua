@@ -31,7 +31,7 @@ end
 
 function HyperModeSelectScene:render()
 	love.graphics.draw(
-		backgrounds["game_config"],
+		backgrounds["input_config"],
 		0, 0, 0,
 		1, 1
 	)

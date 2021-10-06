@@ -1,12 +1,7 @@
 local ModeSelectScene = Scene:extend()
 
-ModeSelectScene.title = ""
-
-if config.gamesettings.hyper then
-	ModeSelectScene.title = "Normal Mode"
-else
-	ModeSelectScene.title = "Game Start"
-end
+ModeSelectScene.title = "Game Start"
+--time for a very hacky fix regarding this...
 
 --ModeSelectScene.title = "Normal Mode"
 

@@ -7,6 +7,11 @@ local menu_screens = {
     HyperModeSelectScene,
 }
 
+local mode_names = {
+    "Normal Modes",
+    "Hyper Modes",
+}
+
 function DifficultyScene:new()
     self.menu_state = 1
     DiscordRPC:update({
@@ -18,6 +23,10 @@ end
 function DifficultyScene:update() end
 
 function DifficultyScene:render()
+    --kill some sounds first
+    love.audio.stop(sounds.powermode)
+	love.audio.stop(sounds.topout)
+
     love.graphics.setColor(1, 1, 1, 1)
     if self.menu_state == 2 then
         love.graphics.draw(
@@ -46,13 +55,14 @@ function DifficultyScene:render()
 
     --first we draw the text shadow...
 	love.graphics.setColor(0, 0, 0, 0.5)
-	for i, screen in pairs(menu_screens) do
-		love.graphics.printf(screen.title, 362, 282 + 80 * i, 560, "center")
+
+	for i, mode in pairs(mode_names) do
+		love.graphics.printf(mode, 362, 282 + 80 * i, 560, "center")
 	end
     --and then the main text.
 	love.graphics.setColor(1, 1, 1, 1)
-	for i, screen in pairs(menu_screens) do
-		love.graphics.printf(screen.title, 360, 280 + 80 * i, 560, "center")
+    for i, mode in pairs(mode_names) do
+		love.graphics.printf(mode, 360, 280 + 80 * i, 560, "center")
 	end
 end
 

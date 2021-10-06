@@ -5,21 +5,7 @@ TitleScene.restart_message = false
 
 local main_menu_screens = {}
 
-if config.gamesettings.hyper then
-	main_menu_screens = {
-		DifficultyScene,
-		SettingsScene,
-		CreditsScene,
-		ExitScene,
-	}
-else
-	main_menu_screens = {
-		ModeSelectScene,
-		SettingsScene,
-		CreditsScene,
-		ExitScene,
-	}
-end
+
 
 local mainmenuidle = {
 	"Idle",
@@ -36,6 +22,21 @@ local mainmenuidle = {
 }
 
 function TitleScene:new()
+	if config.gamesettings.hyper then
+		main_menu_screens = {
+			DifficultyScene,
+			SettingsScene,
+			CreditsScene,
+			ExitScene,
+		}
+	else
+		main_menu_screens = {
+			ModeSelectScene,
+			SettingsScene,
+			CreditsScene,
+			ExitScene,
+		}
+	end
 	self.main_menu_state = 1
 	self.frames = 0
 	self.snow_bg_opacity = 0
